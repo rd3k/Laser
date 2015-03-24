@@ -1,0 +1,30 @@
+**.js
+.sass-cache/
+
+# Mac
+.DS_Store
+.Trashes
+._*
+
+# Windows
+Thumbs.db
+Desktop.ini
+
+# Visual Studio
+*.suo
+*.user
+[Dd]ebug/
+[Dd]ebugPublic/
+[Rr]elease/
+[Rr]eleases/
+x64/
+x86/
+build/
+bld/
+[Bb]in/
+[Oo]bj/
+
+# Resharper
+_ReSharper*/
+*.[Rr]e[Ss]harper
+*.DotSettings.user
