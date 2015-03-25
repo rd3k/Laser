@@ -1,6 +1,6 @@
 module rd3k.Laser {
 
-    export class Filter implements ICollidable {
+    export class Filter implements IGameObject, ICollidable {
 
         public get a(): Vector2 {
 
@@ -31,7 +31,11 @@ module rd3k.Laser {
 
         public update(): void {}
 
-        public draw(): void {}
+        public draw(renderer: IRenderer): void {
+
+            renderer.renderFilter(this);
+
+        }
 
     }
 

@@ -1,8 +1,6 @@
 module rd3k.Laser {
 
-    export class Wall implements ICollidable {
-
-        public colour: string;
+    export class Wall implements IGameObject, ICollidable {
 
         constructor(public bounds: Rectangle) {}
 
@@ -21,7 +19,11 @@ module rd3k.Laser {
 
         public update(): void {}
 
-        public draw(): void {}
+        public draw(renderer: IRenderer): void {
+
+            renderer.renderWall(this);
+
+        }
 
     }
 

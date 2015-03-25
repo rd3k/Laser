@@ -1,6 +1,6 @@
 module rd3k.Laser {
 
-    export class Emitter {
+    export class Emitter implements IGameObject {
 
         private _direction: Vector2;
         private _angle: number;
@@ -29,7 +29,11 @@ module rd3k.Laser {
 
         public update(): void {}
 
-        public draw(): void {}
+        public draw(renderer: IRenderer): void {
+
+            renderer.renderEmitter(this);
+
+        }
 
     }
 

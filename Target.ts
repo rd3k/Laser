@@ -1,6 +1,8 @@
 module rd3k.Laser {
 
-    export class Target implements ICollidable {
+    export class Target implements IGameObject, ICollidable {
+
+        private _radius = 10;
 
         public hit: boolean;
 
@@ -21,7 +23,11 @@ module rd3k.Laser {
 
         public update(): void {}
 
-        public draw(): void {}
+        public draw(renderer: IRenderer): void {
+
+            renderer.renderTarget(this);
+
+        }
 
     }
 

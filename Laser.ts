@@ -14,10 +14,6 @@ module rd3k.Laser {
 
         public calculateRays(): void {}
 
-        public update(): void {}
-
-        public draw(): void {}
-
     }
 
 }

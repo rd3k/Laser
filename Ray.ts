@@ -1,6 +1,6 @@
 module rd3k.Laser {
 
-    export class Ray {
+    export class Ray implements IGameObject {
 
         private _colour: string;
 
@@ -8,7 +8,11 @@ module rd3k.Laser {
 
         public update(): void {}
 
-        public draw(): void {}
+        public draw(renderer: IRenderer): void {
+
+            renderer.renderRay(this);
+
+        }
 
     }
 

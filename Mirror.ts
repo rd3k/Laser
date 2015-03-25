@@ -1,6 +1,6 @@
 module rd3k.Laser {
 
-    export class Mirror implements ICollidable, IRotatable {
+    export class Mirror implements IGameObject, ICollidable, IRotatable {
 
         private _angle: number;
         private _a: Vector2;
@@ -30,7 +30,6 @@ module rd3k.Laser {
 
         }
 
-
         constructor(public position: Vector2, public angle: number = 0) {}
 
         public getIntersection(inA: Vector2, inB: Vector2, outVector: Vector2): boolean {
@@ -53,7 +52,11 @@ module rd3k.Laser {
 
         public update(): void {}
 
-        public draw(): void {}
+        public draw(renderer: IRenderer): void {
+
+            renderer.renderMirror(this);
+
+        }
 
     }
 

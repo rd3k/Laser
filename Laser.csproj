@@ -19,11 +19,16 @@
   </PropertyGroup>
   <ItemGroup>
     <TypeScriptCompile Include="app.ts" />
+    <TypeScriptCompile Include="CanvasRenderer.ts" />
     <TypeScriptCompile Include="Emitter.ts" />
     <TypeScriptCompile Include="Filter.ts" />
+    <TypeScriptCompile Include="GameObject.ts" />
+    <TypeScriptCompile Include="GateWall.ts" />
     <TypeScriptCompile Include="ICollidable.ts" />
+    <TypeScriptCompile Include="IRenderer.ts" />
     <TypeScriptCompile Include="IRotatable.ts" />
     <TypeScriptCompile Include="Laser.ts" />
+    <TypeScriptCompile Include="LaserScene.ts" />
     <TypeScriptCompile Include="Mirror.ts" />
     <TypeScriptCompile Include="Ray.ts" />
     <TypeScriptCompile Include="Rectangle.ts" />
