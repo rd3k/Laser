@@ -1,30 +1,39 @@
-﻿module rd3k.Laser.Scene {
+﻿module rd3k.Laser {
 
-    var objects: Array<IGameObject>;
-    var renderer: IRenderer;
+    export class Scene {
 
-    export function init() {
+        private _objects: Array<IGameObject>;
+        private _renderer: IRenderer;
 
-        objects.push(new Emitter(Vector2.Zero, "#fff"));
+        constructor(renderer: IRenderer) {
 
-    }
+            this._renderer = renderer;
 
-    export function update() {
-
-        var i = objects.length;
-        while (i--) {
-            objects[i].update();
         }
 
-    }
+        public addObject(object: IGameObject) {
 
-    export function draw() {
+            this._objects.push(object);
 
-        var i = objects.length;
-        while (i--) {
-            objects[i].draw(renderer);
         }
 
+        public update() {
+
+            var i = this._objects.length;
+            while (i--) {
+                this._objects[i].update();
+            }
+
+        }
+
+        public draw() {
+
+            var i = this._objects.length;
+            while (i--) {
+                this._objects[i].draw(this._renderer);
+            }
+
+        }
     }
 
 }

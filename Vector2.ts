@@ -2,51 +2,131 @@ module rd3k.Laser {
 
     export class Vector2 {
 
-        private static _zero = new Vector2();
-
-        public static get Zero(): Vector2 {
-            return Vector2._zero;
-        }
-
-        public x: number;
-        public y: number;
-
         public get length(): number {
 
-            return 0;
+            return Math.sqrt((this.x * this.x) + (this.y * this.y));
 
         }
 
-        constructor() {}
+        constructor(public x: number = 0, public y: number = 0) {}
 
         public static fromAngle(radians: number): Vector2 {
 
-            return new Vector2();
+            return new Vector2(Math.cos(radians), Math.sin(radians));
 
         }
 
         public dot(other: Vector2): number {
 
-            return 0;
+            return (this.x * other.x) + (this.y * other.y);
 
         }
 
         public rotate(radians: number): Vector2 {
 
-            return new Vector2();
+            var cos = Math.cos(radians),
+                sin = Math.sin(radians);
+
+            return new Vector2((this.x * cos) - (this.y * sin), (this.x * sin) + (this.y * cos));
 
         }
 
         public reflect(normal: Vector2): Vector2 {
 
-            return new Vector2();
+            var i = 2 * this.dot(normal);
+            return new Vector2(this.x - (i * normal.x), this.y - (i * normal.y));
 
         }
 
-        public getIntersection(other: Vector2, outIntersection: Vector2): boolean {
+        public static getVectorIntersection(v0p0: Vector2, v0p1: Vector2, v1p0: Vector2, v1p1: Vector2, outIntersection: Vector2): boolean {
 
-            outIntersection = new Vector2();
-            return false;
+            var s1x = v0p1.x - v0p0.x,
+                s1y = v0p1.y - v0p0.y,
+                s2x = v1p1.x - v1p0.x,
+                s2y = v1p1.y - v1p0.y,
+                s = (-s1y * (v0p0.x - v1p0.x) + s1x * (v0p0.y - v1p0.y)) / (-s2x * s1y + s1x * s2y),
+                t = (s2x * (v0p0.y - v1p0.y) - s2y * (v0p0.x - v1p0.x)) / (-s2x * s1y + s1x * s2y);
+
+            if (s >= 0 && s <= 1 && t >= 0 && t <= 1) {
+
+                outIntersection.x = v0p0.x + (t * s1x);
+                outIntersection.y = v0p0.y + (t * s1y);
+                return true;
+
+            } else {
+
+                return false;
+
+            }
+
+        }
+
+        public static getCircleIntersection(v0: Vector2, v1: Vector2, cPosition: Vector2, cRadius: number, outIntersection: Vector2): boolean {
+
+            var dx = v1.x - v0.x,
+                dy = v1.y - v0.y,
+                a = dx * dx + dy * dy,
+                b = 2 * (dx * (v0.x - cPosition.x) + dy * (v0.y - cPosition.y)),
+                c = (v0.x - cPosition.x) * (v0.x - cPosition.x) + (v0.y - cPosition.y) * (v0.y - cPosition.y) - cRadius * cRadius,
+                det = b * b - 4 * a * c,
+                t = -b / (2 * a),
+                t0: number, t1: number,
+                i1x: number, i1y: number,
+                i2x: number, i2y: number,
+                d1: number, d2: number;
+
+            if (a <= 0.0000001 || det < 0) {
+
+                // No real solutions
+                return false;
+
+            }
+
+            if (det === 0) {
+
+                // One solution
+                if (0 <= t && t <= 1) {
+
+                    outIntersection.x = v0.x + t * dx;
+                    outIntersection.y = v0.y + t * dy;
+                    return true;
+
+                }
+
+                return false;
+
+            }
+
+            t0 = (-b + Math.sqrt(det)) / (2 * a);
+            t1 = (-b - Math.sqrt(det)) / (2 * a);
+
+            if (!(0 <= t0 && t0 <= 1) && !(0 <= t1 && t1 <= 1)) {
+
+                return false;
+
+            }
+
+            // Two solutions
+            i1x = v0.x + t0 * dx;
+            i1y = v0.y + t0 * dy;
+            i2x = v0.x + t1 * dx;
+            i2y = v0.y + t1 * dy;
+            d1 = new Vector2(i1x - v0.x, i1y - v0.y).length;
+            d2 = new Vector2(i2x - v0.x, i2y - v0.y).length;
+
+            if (d1 < d2) {
+
+                outIntersection.x = i1x;
+                outIntersection.y = i1y;
+
+            } else {
+
+                outIntersection.x = i2x;
+                outIntersection.y = i2y;
+
+            }
+
+            return true;
 
         }
 

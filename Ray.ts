@@ -2,9 +2,19 @@ module rd3k.Laser {
 
     export class Ray implements IGameObject {
 
-        private _colour: string;
+        public get colour() {
 
-        constructor(public source: Object, public from: Vector2, public to: Vector2) {}
+            return this._colour;
+
+        }
+
+        public to: Vector2;
+
+        constructor(public source: Object, public from: Vector2, public rayVector: Vector2, private _colour: string) {
+
+            this.to = new Vector2(from.x + rayVector.x, from.y + rayVector.y);
+
+        }
 
         public update(): void {}
 

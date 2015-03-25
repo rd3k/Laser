@@ -10,7 +10,7 @@
 
         public getRays(sourceRay: Ray): Array<Ray> {
 
-            return [];
+            return sourceRay.colour === this.colour ? [new Ray(this, sourceRay.to, sourceRay.rayVector, sourceRay.colour)] : [];
 
         }
 

@@ -34,19 +34,20 @@ module rd3k.Laser {
 
         public getIntersection(inA: Vector2, inB: Vector2, outVector: Vector2): boolean {
 
+            outVector = new Vector2();
             return false;
 
         }
 
         public getRays(sourceRay: Ray): Array<Ray> {
 
-            return null;
+            return [];
 
         }
 
         public reflect(inVector: Vector2): Vector2 {
 
-            return null;
+            return new Vector2();
 
         }
 

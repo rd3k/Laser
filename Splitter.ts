@@ -10,7 +10,10 @@ module rd3k.Laser {
 
         public getRays(sourceRay: Ray): Array<Ray> {
 
-            return [];
+            return [
+                new Ray(this, sourceRay.to, sourceRay.rayVector.reflect(this.normal), sourceRay.colour),
+                new Ray(this, sourceRay.to, sourceRay.rayVector, sourceRay.colour)
+            ];
 
         }
 
