@@ -43,7 +43,7 @@ module rd3k.Laser {
 
         }
 
-        constructor(private x: number, private y: number, width: number, height: number) {
+        constructor(x: number, y: number, width: number, height: number) {
 
             this._topLeft = new Vector2(x, y);
             this._topRight = new Vector2(x + width, y);

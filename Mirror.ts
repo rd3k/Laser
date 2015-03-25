@@ -2,19 +2,14 @@ module rd3k.Laser {
 
     export class Mirror implements IGameObject, ICollidable, IRotatable {
 
-        private _angle: number;
         private _a: Vector2;
         private _b: Vector2;
-
-        public get normalAngle(): number {
-
-            return 0;
-
-        }
+        private _angle: number;
+        private _normal: Vector2;
 
         public get normal(): Vector2 {
 
-            return new Vector2();
+            return this._normal;
 
         }
 
@@ -30,24 +25,40 @@ module rd3k.Laser {
 
         }
 
-        constructor(public position: Vector2, public angle: number = 0) {}
+        public get angle(): number {
+
+            return this._angle;
+
+        }
+
+        public set angle(value: number) {
+
+            this._angle = value;
+            this._normal = Vector2.fromAngle(Util.toRadians(this._angle - 90));
+            this._a = new Vector2(-this._width / 2, 0).rotate(Util.toRadians(value));
+            this._a.x += this.position.x;
+            this._a.y += this.position.y;
+            this._b = new Vector2(this._width / 2, 0).rotate(Util.toRadians(value));
+            this._b.x += this.position.x;
+            this._b.y += this.position.y;
+
+        }
+
+        constructor(public position: Vector2, angle: number = 0, private _width = 20) {
+
+            this.angle = angle;
+
+        }
 
         public getIntersection(inA: Vector2, inB: Vector2, outVector: Vector2): boolean {
 
-            outVector = new Vector2();
-            return false;
+            return Vector2.getVectorIntersection(inA, inB, this.a, this.b, outVector);
 
         }
 
         public getRays(sourceRay: Ray): Array<Ray> {
 
-            return [];
-
-        }
-
-        public reflect(inVector: Vector2): Vector2 {
-
-            return new Vector2();
+            return [new Ray(this, sourceRay.to, sourceRay.rayVector.reflect(this.normal), sourceRay.colour)];
 
         }
 

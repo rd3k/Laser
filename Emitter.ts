@@ -16,6 +16,7 @@ module rd3k.Laser {
         public set angle(value: number) {
 
             this._angle = value;
+            this._direction = Vector2.fromAngle(Util.toRadians(value));
 
         }
 
@@ -25,12 +26,30 @@ module rd3k.Laser {
 
         }
 
-        constructor(public position: Vector2, public colour: string, angle: number = 0) {}
+        public get scene(): Scene {
+
+            return this._scene;
+
+        }
+
+        constructor(private _scene: Scene, public position: Vector2, public colour: string, angle: number = 0) {
+
+            this.angle = angle;
+            this.laser = new Laser(this);
+
+        }
+
+        public invalidate(): void {
+
+            this.laser.calculateRays(this._scene.collidables);
+
+        }
 
         public update(): void {}
 
         public draw(renderer: IRenderer): void {
 
+            this.laser.draw(renderer);
             renderer.renderEmitter(this);
 
         }
