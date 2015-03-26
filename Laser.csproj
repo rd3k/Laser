@@ -40,6 +40,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="index.html" />
+    <Content Include="lib\hidpi-canvas.min.js" />
     <Content Include="readme.md" />
   </ItemGroup>
   <PropertyGroup>
