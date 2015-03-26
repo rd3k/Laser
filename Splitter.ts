@@ -17,7 +17,11 @@ module rd3k.Laser {
 
         }
 
-        public update(): void {}
+        public update(): void {
+
+            this.angle -= 0.5;
+
+        }
 
         public draw(renderer: IRenderer): void {
 

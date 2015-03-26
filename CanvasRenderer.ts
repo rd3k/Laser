@@ -24,11 +24,15 @@
 
             var ctx = this._context;
 
+            ctx.save();
+            ctx.translate(emitter.position.x, emitter.position.y);
+            ctx.rotate(Util.toRadians(emitter.angle));
             ctx.beginPath();
-            ctx.arc(emitter.position.x, emitter.position.y, 10, 0.5, 2 * Math.PI - 0.5);
+            ctx.arc(0, 0, 10, 0.5, 2 * Math.PI - 0.5);
             ctx.lineWidth = 2;
             ctx.strokeStyle = "#000";
             ctx.stroke();
+            ctx.restore();
 
         }
 

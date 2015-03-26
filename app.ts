@@ -19,14 +19,21 @@ var renderer = new Laser.CanvasRenderer(<HTMLCanvasElement>document.querySelecto
 var scene = new Laser.Scene(renderer);
 
 scene.addObjects(
-    new Laser.Wall(new Laser.Rectangle(500, 0, 40, 600)),
     new Laser.Emitter(scene, new Laser.Vector2(50, 50), "red"),
+    new Laser.Emitter(scene, new Laser.Vector2(300, 400), "lime", -90),
     new Laser.Mirror(new Laser.Vector2(100, 50), 45),
     new Laser.Mirror(new Laser.Vector2(100, 250), 45),
     new Laser.Filter(new Laser.Vector2(200, 250), 90, "blue"),
     new Laser.Target(new Laser.Vector2(250, 250)),
-    new Laser.Target(new Laser.Vector2(600, 250)),
+    new Laser.Target(new Laser.Vector2(600, 300)),
     new Laser.Splitter(new Laser.Vector2(300, 250), 105),
+    new Laser.Wall(new Laser.Rectangle(500, 0, 40, 150)),
+    new Laser.GateWall(new Laser.Rectangle(500, 150, 40, 50), "red"),
+    new Laser.Wall(new Laser.Rectangle(500, 200, 40, 75)),
+    new Laser.GateWall(new Laser.Rectangle(500, 275, 40, 50), "lime"),
+    new Laser.Wall(new Laser.Rectangle(500, 325, 40, 75)),
+    new Laser.GateWall(new Laser.Rectangle(500, 400, 40, 50), "blue"),
+    new Laser.Wall(new Laser.Rectangle(500, 450, 40, 150)),
     new Laser.GateWall(new Laser.Rectangle(75, 125, 50, 50), "red")
 );
 
