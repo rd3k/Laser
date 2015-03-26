@@ -50,7 +50,7 @@ module rd3k.Laser {
 
         public getRays(sourceRay: Ray): Array<Ray> {
 
-            return [new Ray(this, sourceRay.to, sourceRay.rayVector, this.colour)];
+            return [Ray.create(this, this.colour, sourceRay.to, sourceRay.rayVector)];
 
         }
 

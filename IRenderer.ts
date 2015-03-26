@@ -2,6 +2,7 @@
 
     export interface IRenderer {
 
+        invalidate(): void
         renderEmitter(emitter: Emitter): void
         renderWall(wall: Wall): void
         renderTarget(target: Target): void

@@ -3,10 +3,20 @@
     export class CanvasRenderer implements IRenderer {
 
         private _context: CanvasRenderingContext2D;
+        private _width: number;
+        private _height: number;
 
         constructor(canvas: HTMLCanvasElement) {
 
             this._context = canvas.getContext("2d");
+            this._width = canvas.width;
+            this._height = canvas.height;
+
+        }
+
+        public invalidate(): void {
+
+            this._context.clearRect(0, 0, this._width, this._height);
 
         }
 

@@ -18,16 +18,26 @@ import Laser = rd3k.Laser;
 var renderer = new Laser.CanvasRenderer(<HTMLCanvasElement>document.querySelector("#demo"));
 var scene = new Laser.Scene(renderer);
 
-scene.addObject(new Laser.Wall(new Laser.Rectangle(500, 0, 40, 600)));
-scene.addObject(new Laser.Emitter(scene, new Laser.Vector2(50, 50), "red"));
-scene.addObject(new Laser.Mirror(new Laser.Vector2(100, 50), 45));
-scene.addObject(new Laser.Mirror(new Laser.Vector2(100, 250), 45));
-scene.addObject(new Laser.Filter(new Laser.Vector2(200, 250), 90, "blue"));
-scene.addObject(new Laser.Target(new Laser.Vector2(250, 250)));
-scene.addObject(new Laser.Target(new Laser.Vector2(600, 250)));
-scene.addObject(new Laser.Splitter(new Laser.Vector2(300, 250), 105));
-scene.addObject(new Laser.GateWall(new Laser.Rectangle(75, 125, 50, 50), "red"));
+scene.addObjects(
+    new Laser.Wall(new Laser.Rectangle(500, 0, 40, 600)),
+    new Laser.Emitter(scene, new Laser.Vector2(50, 50), "red"),
+    new Laser.Mirror(new Laser.Vector2(100, 50), 45),
+    new Laser.Mirror(new Laser.Vector2(100, 250), 45),
+    new Laser.Filter(new Laser.Vector2(200, 250), 90, "blue"),
+    new Laser.Target(new Laser.Vector2(250, 250)),
+    new Laser.Target(new Laser.Vector2(600, 250)),
+    new Laser.Splitter(new Laser.Vector2(300, 250), 105),
+    new Laser.GateWall(new Laser.Rectangle(75, 125, 50, 50), "red")
+);
 
-scene.invalidate();
-scene.update();
-scene.draw();
+Laser.Ray.createPool(64);
+
+(function loop() {
+
+    requestAnimationFrame(loop);
+    scene.invalidate();
+    scene.update();
+    scene.draw();
+    Laser.Ray.resetPool();
+
+})();

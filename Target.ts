@@ -27,7 +27,7 @@ module rd3k.Laser {
         public getRays(sourceRay: Ray): Array<Ray> {
 
             this._hit = true;
-            return [new Ray(this, sourceRay.to, sourceRay.rayVector, sourceRay.colour)];
+            return [new Ray(this, sourceRay.colour, sourceRay.to, sourceRay.rayVector)];
 
         }
 

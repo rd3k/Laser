@@ -48,9 +48,21 @@
 
         }
 
+        public addObjects(...objects: Array<IGameObject>): void {
+
+            var i = objects.length;
+
+            while (i--) {
+                this.addObject(objects[i]);
+            }
+
+        }
+
         public invalidate(): void {
 
             var i = this._targets.length;
+
+            this._renderer.invalidate();
 
             while (i--) {
                 this._targets[i].invalidate();

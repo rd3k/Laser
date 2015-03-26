@@ -39,12 +39,14 @@ module rd3k.Laser {
 
         public set angle(value: number) {
 
+            var radians: number = Util.toRadians(value);
+
             this._angle = value;
-            this._normal = Vector2.fromAngle(Util.toRadians(this._angle - 90));
-            this._a = new Vector2(-this._width / 2, 0).rotate(Util.toRadians(value));
+            this._normal = Vector2.fromAngle(radians - (Math.PI / 2));
+            this._a = new Vector2(-this._width / 2, 0).rotate(radians);
             this._a.x += this.position.x;
             this._a.y += this.position.y;
-            this._b = new Vector2(this._width / 2, 0).rotate(Util.toRadians(value));
+            this._b = new Vector2(this._width / 2, 0).rotate(radians);
             this._b.x += this.position.x;
             this._b.y += this.position.y;
 
@@ -64,11 +66,15 @@ module rd3k.Laser {
 
         public getRays(sourceRay: Ray): Array<Ray> {
 
-            return [new Ray(this, sourceRay.to, sourceRay.rayVector.reflect(this.normal), sourceRay.colour)];
+            return [Ray.create(this, sourceRay.colour, sourceRay.to, sourceRay.rayVector.reflect(this.normal))];
 
         }
 
-        public update(): void {}
+        public update(): void {
+
+            this.angle += 0.2;
+
+        }
 
         public draw(renderer: IRenderer): void {
 
