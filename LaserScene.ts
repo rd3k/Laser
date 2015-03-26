@@ -4,6 +4,7 @@
 
         private _objects: Array<IGameObject>;
         private _emitters: Array<Emitter>;
+        private _targets: Array<Target>;
         private _renderer: IRenderer;
 
         public get collidables(): Array<ICollidable> {
@@ -25,6 +26,7 @@
 
             this._objects = [];
             this._emitters = [];
+            this._targets = [];
             this._renderer = renderer;
 
         }
@@ -32,8 +34,14 @@
         public addObject(object: IGameObject): void {
 
             if (object instanceof Emitter) {
+
                 object.scene = this;
                 this._emitters.push(object);
+
+            } else if (object instanceof Target) {
+
+                this._targets.push(object);
+
             }
 
             this._objects.push(object);
@@ -42,7 +50,13 @@
 
         public invalidate(): void {
 
-            var i = this._emitters.length;
+            var i = this._targets.length;
+
+            while (i--) {
+                this._targets[i].invalidate();
+            }
+
+            i = this._emitters.length;
 
             while (i--) {
                 this._emitters[i].invalidate();

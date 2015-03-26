@@ -2,53 +2,118 @@
 
     export class CanvasRenderer implements IRenderer {
 
-        constructor(canvas: HTMLCanvasElement) {}
+        private _context: CanvasRenderingContext2D;
+
+        constructor(canvas: HTMLCanvasElement) {
+
+            this._context = canvas.getContext("2d");
+
+        }
 
         public renderEmitter(emitter: Emitter): void {
 
-            console.log("Rendering emitter", emitter);
+            var ctx = this._context;
+
+            ctx.beginPath();
+            ctx.arc(emitter.position.x, emitter.position.y, 10, 0.5, 2 * Math.PI - 0.5);
+            ctx.lineWidth = 2;
+            ctx.strokeStyle = "#000";
+            ctx.stroke();
 
         }
 
         public renderWall(wall: Wall): void {
 
-            console.log("Render wall", wall);
+            var ctx = this._context;
+
+            ctx.beginPath();
+            ctx.fillStyle = "#333";
+            ctx.fillRect(wall.bounds.topLeft.x, wall.bounds.topLeft.y, wall.bounds.width, wall.bounds.height);
+            ctx.fill();
 
         }
 
         public renderTarget(target: Target): void {
 
-            console.log("Rendering target", target);
+            var ctx = this._context;
+
+            ctx.beginPath();
+            ctx.arc(target.position.x, target.position.y, 10, 0, 2 * Math.PI);
+            ctx.fillStyle = target.hit ? "yellow" : "#222";
+            ctx.fill();
+            ctx.lineWidth = 1;
+            ctx.strokeStyle = "#000";
+            ctx.stroke();
 
         }
 
         public renderMirror(mirror: Mirror): void {
 
-            console.log("Rendering mirror", mirror);
+            var ctx = this._context;
+
+            ctx.beginPath();
+            ctx.lineWidth = 4;
+            ctx.strokeStyle = "#ccc";
+            ctx.moveTo(mirror.a.x, mirror.a.y);
+            ctx.lineTo(mirror.b.x, mirror.b.y);
+            ctx.stroke();
 
         }
 
         public renderFilter(filter: Filter): void {
 
-            console.log("Rendering filter", filter);
+            var ctx = this._context;
+
+            ctx.beginPath();
+            ctx.lineWidth = 4;
+            ctx.strokeStyle = filter.colour;
+            ctx.moveTo(filter.a.x, filter.a.y);
+            ctx.lineTo(filter.b.x, filter.b.y);
+            ctx.stroke();
 
         }
 
         public renderSplitter(splitter: Splitter): void {
 
-            console.log("Rendering splitter", splitter);
+            var ctx = this._context;
+
+            ctx.save();
+            ctx.beginPath();
+            ctx.lineWidth = 1;
+            ctx.fillStyle = "#eee";
+            ctx.strokeStyle = "#333";
+            ctx.translate(splitter.position.x, splitter.position.y);
+            ctx.rotate(Util.toRadians(splitter.angle - 45));
+            ctx.strokeRect(-(splitter.width / 2), -(splitter.width / 2), splitter.width, splitter.width);
+            ctx.fill();
+            ctx.moveTo(-(splitter.width / 2), -(splitter.width / 2));
+            ctx.lineTo(splitter.width / 2, splitter.width / 2);
+            ctx.stroke();
+            ctx.restore();
 
         }
 
         public renderGateWall(gateWall: GateWall): void {
 
-            console.log("Render gate wall", gateWall);
+            var ctx = this._context;
+
+            ctx.beginPath();
+            ctx.fillStyle = gateWall.colour;
+            ctx.fillRect(gateWall.bounds.topLeft.x, gateWall.bounds.topLeft.y, gateWall.bounds.width, gateWall.bounds.height);
+            ctx.fill();
 
         }
 
         public renderRay(ray: Ray): void {
 
-            console.log("Render ray", ray);
+            var ctx = this._context;
+
+            ctx.beginPath();
+            ctx.lineWidth = 0.5;
+            ctx.strokeStyle = ray.colour;
+            ctx.moveTo(ray.from.x, ray.from.y);
+            ctx.lineTo(ray.to.x, ray.to.y);
+            ctx.stroke();
 
         }
 

@@ -31,6 +31,12 @@ module rd3k.Laser {
 
         }
 
+        public get width(): number {
+
+            return this._width;
+
+        }
+
         public set angle(value: number) {
 
             this._angle = value;
@@ -44,7 +50,7 @@ module rd3k.Laser {
 
         }
 
-        constructor(public position: Vector2, angle: number = 0, private _width = 20) {
+        constructor(public position: Vector2, angle: number = 0, private _width = 40) {
 
             this.angle = angle;
 

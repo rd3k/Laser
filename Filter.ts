@@ -2,20 +2,19 @@ module rd3k.Laser {
 
     export class Filter implements IGameObject, ICollidable {
 
-        private _width: number;
         private _a: Vector2;
         private _b: Vector2;
         private _angle: number;
 
         public get a(): Vector2 {
 
-            return new Vector2();
+            return this._a;
 
         }
 
         public get b(): Vector2 {
 
-            return new Vector2();
+            return this._b;
 
         }
 
@@ -31,10 +30,13 @@ module rd3k.Laser {
             this._a = new Vector2(-this._width / 2, 0).rotate(Util.toRadians(value));
             this._a.x += this.position.x;
             this._a.y += this.position.y;
+            this._b = new Vector2(this._width / 2, 0).rotate(Util.toRadians(value));
+            this._b.x += this.position.x;
+            this._b.y += this.position.y;
 
         }
 
-        constructor(public position: Vector2, angle: number, public colour: string) {
+        constructor(public position: Vector2, angle: number, public colour: string, private _width = 40) {
 
             this.angle = angle;
 

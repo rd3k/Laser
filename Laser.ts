@@ -90,7 +90,7 @@ module rd3k.Laser {
 
         public draw(renderer: IRenderer): void {
 
-            this._rays.forEach(renderer.renderRay);
+            this._rays.forEach(renderer.renderRay.bind(renderer));
 
         }
 

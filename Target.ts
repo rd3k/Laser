@@ -2,11 +2,21 @@ module rd3k.Laser {
 
     export class Target implements IGameObject, ICollidable {
 
-        private _radius = 10;
+        private _radius: number;
+        private _hit: boolean;
 
-        public hit: boolean;
+        public get hit(): boolean {
 
-        constructor(public position: Vector2) {}
+            return this._hit;
+
+        }
+
+        constructor(public position: Vector2) {
+
+            this._radius = 10;
+            this._hit = false;
+
+        }
 
         public getIntersection(inA: Vector2, inB: Vector2, outVector: Vector2): boolean {
 
@@ -16,7 +26,14 @@ module rd3k.Laser {
 
         public getRays(sourceRay: Ray): Array<Ray> {
 
+            this._hit = true;
             return [new Ray(this, sourceRay.to, sourceRay.rayVector, sourceRay.colour)];
+
+        }
+
+        public invalidate(): void {
+
+            this._hit = false;
 
         }
 
