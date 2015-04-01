@@ -26,4 +26,12 @@ module rd3k.Laser.Util {
 
     }
 
+    export function isPointInCircle(x: number, y: number, circleX: number, circleY: number, circleRadius: number) {
+
+        var squareDist = ((circleX - x) * (circleX - x)) + ((circleY - y) * (circleY - y));
+
+        return squareDist <= circleRadius * circleRadius;
+
+    }
+
 }

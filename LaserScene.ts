@@ -6,6 +6,8 @@
         private _emitters: Array<Emitter>;
         private _targets: Array<Target>;
         private _renderer: IRenderer;
+        private _mouse: IMouseState;
+        private _over: ISelectable;
 
         public get collidables(): Array<ICollidable> {
 
@@ -22,12 +24,36 @@
 
         }
 
+        public get selectables(): Array<ISelectable> {
+
+            var i = this._objects.length,
+                coll: Array<ISelectable> = [];
+
+            while (i--) {
+                if (typeof (<ISelectable>this._objects[i]).isMouseOver === "function") {
+                    coll.push(<ISelectable>this._objects[i]);
+                }
+            }
+
+            return coll;
+
+        }
+
         constructor(renderer: IRenderer) {
 
             this._objects = [];
             this._emitters = [];
             this._targets = [];
             this._renderer = renderer;
+            this._mouse = {
+                over: false,
+                down: false,
+                x: -1,
+                y: -1
+            };
+            this._over = null;
+
+            this._addEvents();
 
         }
 
@@ -50,7 +76,7 @@
 
         public addObjects(...objects: Array<IGameObject>): void {
 
-            var i = objects.length;
+            var i: number = objects.length;
 
             while (i--) {
                 this.addObject(objects[i]);
@@ -60,7 +86,7 @@
 
         public invalidate(): void {
 
-            var i = this._targets.length;
+            var i: number = this._targets.length;
 
             this._renderer.invalidate();
 
@@ -78,7 +104,27 @@
 
         public update(): void {
 
-            var i = this._objects.length;
+            var selectables: Array<ISelectable> = this.selectables;
+            var i: number = selectables.length;
+            var over: ISelectable = null;
+
+            while (i--) {
+                if (this.selectables[i].isMouseOver(this._mouse.x, this._mouse.y)) {
+                    over = this.selectables[i];
+                    break;
+                }
+            }
+
+            if (this._over !== null) {
+                this._over.selected = false;
+            }
+
+            if (over !== null) {
+                this._over = over;
+                over.selected = true;
+            }
+
+            i = this._objects.length;
 
             while (i--) {
                 this._objects[i].update();
@@ -88,13 +134,48 @@
 
         public draw(): void {
 
-            var i = this._objects.length;
+            var i: number = this._objects.length;
 
             while (i--) {
                 this._objects[i].draw(this._renderer);
             }
 
         }
+
+        private _addEvents(): void {
+
+            var el: HTMLElement = this._renderer.element;
+
+            el.addEventListener("mousemove", (e: MouseEvent) => {
+
+                this._mouse.over = true;
+                this._mouse.x = e.offsetX;
+                this._mouse.y = e.offsetY;
+
+            });
+
+            el.addEventListener("mouseleave", (e: MouseEvent) => {
+
+                this._mouse.over = false;
+                this._mouse.x = -1;
+                this._mouse.y = -1;
+
+            });
+
+            el.addEventListener("mousedown", (e: MouseEvent) => {
+
+                this._mouse.down = true;
+
+            });
+
+            el.addEventListener("mouseup", (e: MouseEvent) => {
+
+                this._mouse.down = false;
+
+            });
+
+        }
+
     }
 
 }

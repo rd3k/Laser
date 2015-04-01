@@ -1,10 +1,12 @@
 module rd3k.Laser {
 
-    export class Filter implements IGameObject, ICollidable {
+    export class Filter implements IGameObject, ICollidable, IMovable, IRotatable, ISelectable {
 
         private _a: Vector2;
         private _b: Vector2;
         private _angle: number;
+
+        public selected: boolean;
 
         public get a(): Vector2 {
 
@@ -24,6 +26,12 @@ module rd3k.Laser {
 
         }
 
+        public get width(): number {
+
+            return this._width;
+
+        }
+
         public set angle(value: number) {
 
             this._angle = value;
@@ -39,6 +47,7 @@ module rd3k.Laser {
         constructor(public position: Vector2, angle: number, public colour: string, private _width = 40) {
 
             this.angle = angle;
+            this.selected = false;
 
         }
 
@@ -54,7 +63,13 @@ module rd3k.Laser {
 
         }
 
-        public update(): void {}
+        public isMouseOver(x: number, y: number): boolean {
+
+            return Util.isPointInCircle(x, y, this.position.x, this.position.y, this._width / 2);
+
+        }
+
+        public update(): void { }
 
         public draw(renderer: IRenderer): void {
 

@@ -1,11 +1,13 @@
 module rd3k.Laser {
 
-    export class Mirror implements IGameObject, ICollidable, IRotatable {
+    export class Mirror implements IGameObject, ICollidable, IMovable, IRotatable, ISelectable {
 
         private _a: Vector2;
         private _b: Vector2;
         private _angle: number;
         private _normal: Vector2;
+
+        public selected: boolean;
 
         public get normal(): Vector2 {
 
@@ -55,6 +57,7 @@ module rd3k.Laser {
         constructor(public position: Vector2, angle: number = 0, private _width = 40) {
 
             this.angle = angle;
+            this.selected = false;
 
         }
 
@@ -67,6 +70,12 @@ module rd3k.Laser {
         public getRays(sourceRay: Ray): Array<Ray> {
 
             return [Ray.create(this, sourceRay.colour, sourceRay.to, sourceRay.rayVector.reflect(this.normal))];
+
+        }
+
+        public isMouseOver(x: number, y: number): boolean {
+
+            return Util.isPointInCircle(x, y, this.position.x, this.position.y, this._width / 2);
 
         }
 

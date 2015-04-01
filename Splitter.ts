@@ -17,6 +17,12 @@ module rd3k.Laser {
 
         }
 
+        public isMouseOver(x: number, y: number): boolean {
+
+            return Util.isPointInCircle(x, y, this.position.x, this.position.y, this.width * Math.cos(Math.PI / 4));
+
+        }
+
         public update(): void {
 
             this.angle -= 0.5;

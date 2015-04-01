@@ -23,13 +23,12 @@ module rd3k.Laser {
 
             var toProcess: Array<Ray> = [],
                 ray: Ray,
-                rayFar: Vector2,
+                rayFar: Vector2 = new Vector2(),
                 intersection: Vector2 = new Vector2(),
-                closestIntersection: Vector2,
+                closestIntersection: Vector2 = new Vector2(),
                 closestDistance: number,
                 closest: ICollidable,
                 obj: ICollidable,
-                newRays: Array<Ray>,
                 i: number;
 
             this._rays.length = 0;
@@ -38,9 +37,9 @@ module rd3k.Laser {
             while (toProcess.length > 0 && this._rays.length < Laser._maxBounces) {
 
                 ray = toProcess.shift();
-                rayFar = new Vector2(ray.from.x + ray.rayVector.x * Laser._longBeam, ray.from.y + ray.rayVector.y * Laser._longBeam);
+                rayFar.x = ray.from.x + ray.rayVector.x * Laser._longBeam;
+                rayFar.y = ray.from.y + ray.rayVector.y * Laser._longBeam;
                 closestDistance = 0;
-                closestIntersection = new Vector2();
                 closest = null;
                 i = collidables.length;
 
@@ -67,18 +66,15 @@ module rd3k.Laser {
 
                 if (closest === null) {
 
-                    ray.to = rayFar;
+                    ray.to.x = rayFar.x;
+                    ray.to.y = rayFar.y;
 
                 } else {
 
-                    ray.to = closestIntersection;
+                    ray.to.x = closestIntersection.x;
+                    ray.to.y = closestIntersection.y;
 
-                    newRays = closest.getRays(ray);
-                    i = newRays.length;
-
-                    while (i--) {
-                        toProcess.push(newRays[i]);
-                    }
+                    toProcess.push.apply(toProcess, closest.getRays(ray));
 
                 }
 

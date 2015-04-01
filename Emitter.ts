@@ -1,11 +1,13 @@
 module rd3k.Laser {
 
-    export class Emitter implements IGameObject {
+    export class Emitter implements IGameObject, IRotatable, IMovable, ISelectable {
 
         private _direction: Vector2;
         private _angle: number;
+        private _width: number;
 
         public laser: Laser;
+        public selected: boolean;
 
         public get angle() {
 
@@ -26,6 +28,12 @@ module rd3k.Laser {
 
         }
 
+        public get width(): number {
+
+            return this._width;
+
+        }
+
         public get scene(): Scene {
 
             return this._scene;
@@ -36,12 +44,20 @@ module rd3k.Laser {
 
             this.angle = angle;
             this.laser = new Laser(this);
+            this.selected = false;
+            this._width = 20;
 
         }
 
         public invalidate(): void {
 
             this.laser.calculateRays(this._scene.collidables);
+
+        }
+
+        public isMouseOver(x: number, y: number): boolean {
+
+            return Util.isPointInCircle(x, y, this.position.x, this.position.y, this._width / 2);
 
         }
 

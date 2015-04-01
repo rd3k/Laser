@@ -2,6 +2,7 @@
 
     export interface IRenderer {
 
+        element: HTMLElement
         invalidate(): void
         renderEmitter(emitter: Emitter): void
         renderWall(wall: Wall): void

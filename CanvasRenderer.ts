@@ -6,11 +6,17 @@
         private _width: number;
         private _height: number;
 
-        constructor(canvas: HTMLCanvasElement) {
+        public get element(): HTMLElement {
 
-            this._context = canvas.getContext("2d");
-            this._width = canvas.width;
-            this._height = canvas.height;
+            return <HTMLElement>this._canvas;
+
+        }
+
+        constructor(private _canvas: HTMLCanvasElement) {
+
+            this._context = _canvas.getContext("2d");
+            this._width = _canvas.width;
+            this._height = _canvas.height;
 
         }
 
@@ -24,11 +30,18 @@
 
             var ctx = this._context;
 
+            if (emitter.selected) {
+                ctx.beginPath();
+                ctx.arc(emitter.position.x, emitter.position.y, emitter.width / 2, 0, 2 * Math.PI);
+                ctx.fillStyle = "#eee";
+                ctx.fill();
+            }
+
             ctx.save();
             ctx.translate(emitter.position.x, emitter.position.y);
             ctx.rotate(Util.toRadians(emitter.angle));
             ctx.beginPath();
-            ctx.arc(0, 0, 10, 0.5, 2 * Math.PI - 0.5);
+            ctx.arc(0, 0, emitter.width / 2, 0.5, 2 * Math.PI - 0.5);
             ctx.lineWidth = 2;
             ctx.strokeStyle = "#000";
             ctx.stroke();
@@ -65,6 +78,13 @@
 
             var ctx = this._context;
 
+            if (mirror.selected) {
+                ctx.beginPath();
+                ctx.arc(mirror.position.x, mirror.position.y, mirror.width / 2, 0, 2 * Math.PI);
+                ctx.fillStyle = "#eee";
+                ctx.fill();
+            }
+
             ctx.beginPath();
             ctx.lineWidth = 4;
             ctx.strokeStyle = "#ccc";
@@ -78,6 +98,13 @@
 
             var ctx = this._context;
 
+            if (filter.selected) {
+                ctx.beginPath();
+                ctx.arc(filter.position.x, filter.position.y, filter.width / 2, 0, 2 * Math.PI);
+                ctx.fillStyle = "#eee";
+                ctx.fill();
+            }
+
             ctx.beginPath();
             ctx.lineWidth = 4;
             ctx.strokeStyle = filter.colour;
@@ -90,6 +117,13 @@
         public renderSplitter(splitter: Splitter): void {
 
             var ctx = this._context;
+
+            if (splitter.selected) {
+                ctx.beginPath();
+                ctx.arc(splitter.position.x, splitter.position.y, splitter.width * Math.cos(Math.PI / 4), 0, 2 * Math.PI);
+                ctx.fillStyle = "#eee";
+                ctx.fill();
+            }
 
             ctx.save();
             ctx.beginPath();

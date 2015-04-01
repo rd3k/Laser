@@ -24,8 +24,8 @@ module rd3k.Laser {
 
         public rotate(radians: number): Vector2 {
 
-            var cos = Math.cos(radians),
-                sin = Math.sin(radians);
+            var cos: number = Math.cos(radians),
+                sin: number = Math.sin(radians);
 
             return new Vector2((this.x * cos) - (this.y * sin), (this.x * sin) + (this.y * cos));
 
@@ -33,19 +33,19 @@ module rd3k.Laser {
 
         public reflect(normal: Vector2): Vector2 {
 
-            var i = 2 * this.dot(normal);
+            var i: number = 2 * this.dot(normal);
             return new Vector2(this.x - (i * normal.x), this.y - (i * normal.y));
 
         }
 
         public static getVectorIntersection(v0p0: Vector2, v0p1: Vector2, v1p0: Vector2, v1p1: Vector2, outIntersection: Vector2): boolean {
 
-            var s1x = v0p1.x - v0p0.x,
-                s1y = v0p1.y - v0p0.y,
-                s2x = v1p1.x - v1p0.x,
-                s2y = v1p1.y - v1p0.y,
-                s = (-s1y * (v0p0.x - v1p0.x) + s1x * (v0p0.y - v1p0.y)) / (-s2x * s1y + s1x * s2y),
-                t = (s2x * (v0p0.y - v1p0.y) - s2y * (v0p0.x - v1p0.x)) / (-s2x * s1y + s1x * s2y);
+            var s1x: number = v0p1.x - v0p0.x,
+                s1y: number = v0p1.y - v0p0.y,
+                s2x: number = v1p1.x - v1p0.x,
+                s2y: number = v1p1.y - v1p0.y,
+                s: number = (-s1y * (v0p0.x - v1p0.x) + s1x * (v0p0.y - v1p0.y)) / (-s2x * s1y + s1x * s2y),
+                t: number = (s2x * (v0p0.y - v1p0.y) - s2y * (v0p0.x - v1p0.x)) / (-s2x * s1y + s1x * s2y);
 
             if (s >= 0 && s <= 1 && t >= 0 && t <= 1) {
 
@@ -63,13 +63,13 @@ module rd3k.Laser {
 
         public static getCircleIntersection(v0: Vector2, v1: Vector2, cPosition: Vector2, cRadius: number, outIntersection: Vector2): boolean {
 
-            var dx = v1.x - v0.x,
-                dy = v1.y - v0.y,
-                a = dx * dx + dy * dy,
-                b = 2 * (dx * (v0.x - cPosition.x) + dy * (v0.y - cPosition.y)),
-                c = (v0.x - cPosition.x) * (v0.x - cPosition.x) + (v0.y - cPosition.y) * (v0.y - cPosition.y) - cRadius * cRadius,
-                det = b * b - 4 * a * c,
-                t = -b / (2 * a),
+            var dx: number = v1.x - v0.x,
+                dy: number = v1.y - v0.y,
+                a: number = dx * dx + dy * dy,
+                b: number = 2 * (dx * (v0.x - cPosition.x) + dy * (v0.y - cPosition.y)),
+                c: number = (v0.x - cPosition.x) * (v0.x - cPosition.x) + (v0.y - cPosition.y) * (v0.y - cPosition.y) - cRadius * cRadius,
+                det: number = b * b - 4 * a * c,
+                t: number = -b / (2 * a),
                 t0: number, t1: number,
                 i1x: number, i1y: number,
                 i2x: number, i2y: number,

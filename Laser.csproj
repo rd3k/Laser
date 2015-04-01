@@ -25,8 +25,11 @@
     <TypeScriptCompile Include="IGameObject.ts" />
     <TypeScriptCompile Include="GateWall.ts" />
     <TypeScriptCompile Include="ICollidable.ts" />
+    <TypeScriptCompile Include="IMouseState.ts" />
+    <TypeScriptCompile Include="IMovable.ts" />
     <TypeScriptCompile Include="IRenderer.ts" />
     <TypeScriptCompile Include="IRotatable.ts" />
+    <TypeScriptCompile Include="ISelectable.ts" />
     <TypeScriptCompile Include="Laser.ts" />
     <TypeScriptCompile Include="LaserScene.ts" />
     <TypeScriptCompile Include="Mirror.ts" />

@@ -1,6 +1,6 @@
 module rd3k.Laser {
 
-    export interface IRotatable {
+    export interface IRotatable extends IGameObject {
 
         angle: number
 
