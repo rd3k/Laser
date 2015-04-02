@@ -24,7 +24,7 @@ scene.addObjects(
     new Laser.Emitter(scene, new Laser.Vector2(300, 400), "lime", -90),
     new Laser.Mirror(new Laser.Vector2(100, 50), 45),
     new Laser.Mirror(new Laser.Vector2(100, 250), 45),
-    new Laser.Filter(new Laser.Vector2(200, 250), 90, "blue"),
+    new Laser.Filter(new Laser.Vector2(200, 250), "blue", 90),
     new Laser.Target(new Laser.Vector2(250, 250)),
     new Laser.Target(new Laser.Vector2(600, 300)),
     new Laser.Splitter(new Laser.Vector2(300, 250), 105),

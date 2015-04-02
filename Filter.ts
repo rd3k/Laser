@@ -44,7 +44,7 @@ module rd3k.Laser {
 
         }
 
-        constructor(public position: Vector2, angle: number, public colour: string, private _width = 40) {
+        constructor(public position: Vector2, public colour: string, angle: number = 0, private _width = 40) {
 
             this.angle = angle;
             this.selected = false;
