@@ -58,6 +58,13 @@
             this._over = null;
             this._dragging = null;
 
+            this.addObjects(
+                new Wall(new Rectangle(0, 0, renderer.element.clientWidth, 1)),
+                new Wall(new Rectangle(0, renderer.element.clientHeight - 1, renderer.element.clientWidth, 1)),
+                new Wall(new Rectangle(0, 0, 1, renderer.element.clientHeight)),
+                new Wall(new Rectangle(renderer.element.clientWidth - 1, 0, 1, renderer.element.clientHeight))
+            );
+
             this._addEvents();
 
         }

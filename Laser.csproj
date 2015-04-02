@@ -34,6 +34,7 @@
     <TypeScriptCompile Include="LaserScene.ts" />
     <TypeScriptCompile Include="Mirror.ts" />
     <TypeScriptCompile Include="Ray.ts" />
+    <TypeScriptCompile Include="RayHit.ts" />
     <TypeScriptCompile Include="Rectangle.ts" />
     <TypeScriptCompile Include="Splitter.ts" />
     <TypeScriptCompile Include="Target.ts" />

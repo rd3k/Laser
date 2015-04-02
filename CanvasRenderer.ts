@@ -175,6 +175,20 @@
 
         }
 
+        public renderRayHit(rayHit: RayHit): void {
+
+            var ctx = this._context;
+
+            ctx.save();
+            ctx.translate(rayHit.position.x, rayHit.position.y);
+            ctx.beginPath();
+            ctx.arc(0, 0, 5, 0, 2 * Math.PI);
+            ctx.fillStyle = rayHit.colour;
+            ctx.fill();
+            ctx.restore();
+
+        }
+
     }
 
 } 

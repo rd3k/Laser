@@ -11,6 +11,7 @@
 /// <reference path="Target.ts" />
 /// <reference path="Splitter.ts" />
 /// <reference path="Ray.ts" />
+/// <reference path="RayHit.ts" />
 /// <reference path="Laser.ts" />
 
 import Laser = rd3k.Laser;
@@ -38,6 +39,7 @@ scene.addObjects(
 );
 
 Laser.Ray.createPool(64);
+Laser.RayHit.createPool(16);
 
 scene.invalidate();
 

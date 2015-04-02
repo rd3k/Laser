@@ -6,6 +6,7 @@ module rd3k.Laser {
         private static _longBeam: number = 4096;
 
         private _rays: Array<Ray>;
+        private _hits: Array<RayHit>;
 
         public get colour(): string {
 
@@ -16,6 +17,7 @@ module rd3k.Laser {
         constructor(private _emitter: Emitter) {
 
             this._rays = [];
+            this._hits = [];
 
         }
 
@@ -29,9 +31,11 @@ module rd3k.Laser {
                 closestDistance: number,
                 closest: ICollidable,
                 obj: ICollidable,
+                newRays: Array<Ray> = null,
                 i: number;
 
             this._rays.length = 0;
+            this._hits.length = 0;
             toProcess.push(Ray.create(this, this.colour, this._emitter.position, this._emitter.direction));
 
             while (toProcess.length > 0 && this._rays.length < Laser._maxBounces) {
@@ -73,8 +77,12 @@ module rd3k.Laser {
 
                     ray.to.x = closestIntersection.x;
                     ray.to.y = closestIntersection.y;
+                    newRays = closest.getRays(ray);
+                    toProcess.push.apply(toProcess, newRays);
 
-                    toProcess.push.apply(toProcess, closest.getRays(ray));
+                    if (newRays.length === 0) {
+                        this._hits.push(RayHit.create(ray.to, ray.colour));
+                    }
 
                 }
 
@@ -86,7 +94,8 @@ module rd3k.Laser {
 
         public draw(renderer: IRenderer): void {
 
-            this._rays.forEach(renderer.renderRay.bind(renderer));
+            this._rays.forEach(r => r.draw(renderer));
+            this._hits.forEach(h => h.draw(renderer));
 
         }
 

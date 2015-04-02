@@ -12,6 +12,7 @@
         renderSplitter(splitter: Splitter): void
         renderGateWall(gateWall: GateWall): void
         renderRay(ray: Ray): void
+        renderRayHit(rayHit: RayHit): void
 
     }
 
