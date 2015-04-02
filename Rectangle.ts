@@ -52,6 +52,12 @@ module rd3k.Laser {
 
         }
 
+        public containsPoint(x: number, y: number) {
+
+            return (x >= this.topLeft.x && y >= this.topLeft.y && x < this.topRight.x && y < this.bottomRight.y);
+
+        }
+
     }
 
 }

@@ -68,14 +68,19 @@
 
                 object.scene = this;
                 this._emitters.push(object);
+                this._objects.unshift(object);
 
-            } else if (object instanceof Target) {
+            } else {
 
-                this._targets.push(object);
+                if (object instanceof Target) {
+
+                    this._targets.push(object);
+
+                }
+
+                this._objects.push(object);
 
             }
-
-            this._objects.push(object);
 
         }
 

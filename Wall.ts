@@ -19,6 +19,14 @@ module rd3k.Laser {
 
             }
 
+            if (this.bounds.containsPoint(inA.x, inA.y)) {
+
+                outVector.x = inA.x;
+                outVector.y = inA.y;
+                return true;
+
+            }
+
             return false;
 
         }
