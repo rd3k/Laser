@@ -30,6 +30,7 @@
     <TypeScriptCompile Include="IRenderer.ts" />
     <TypeScriptCompile Include="IRotatable.ts" />
     <TypeScriptCompile Include="ISelectable.ts" />
+    <TypeScriptCompile Include="KeyboardKey.ts" />
     <TypeScriptCompile Include="Laser.ts" />
     <TypeScriptCompile Include="LaserScene.ts" />
     <TypeScriptCompile Include="Mirror.ts" />

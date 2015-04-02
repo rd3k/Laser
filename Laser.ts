@@ -94,8 +94,17 @@ module rd3k.Laser {
 
         public draw(renderer: IRenderer): void {
 
-            this._rays.forEach(r => r.draw(renderer));
-            this._hits.forEach(h => h.draw(renderer));
+            var i = this._rays.length;
+
+            while (i--) {
+                this._rays[i].draw(renderer);
+            }
+
+            i = this._hits.length;
+
+            while (i--) {
+                this._hits[i].draw(renderer);
+            }
 
         }
 

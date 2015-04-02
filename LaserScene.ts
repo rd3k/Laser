@@ -10,6 +10,7 @@
         private _mouseScrollTimeout: number;
         private _over: ISelectable;
         private _dragging: IMovable;
+        private _keyUps: Array<KeyboardEvent>;
 
         public get collidables(): Array<ICollidable> {
 
@@ -57,6 +58,7 @@
             this._mouseScrollTimeout = null;
             this._over = null;
             this._dragging = null;
+            this._keyUps = [];
 
             this.addObjects(
                 new Wall(new Rectangle(0, 0, renderer.element.clientWidth, 1)),
@@ -123,6 +125,7 @@
             var i: number = selectables.length;
             var over: ISelectable = null;
             var shouldInvalidate: boolean = false;
+            var keyUpCode: number = -1;
 
             while (i--) {
                 if (this.selectables[i].isMouseOver(this._mouse.x, this._mouse.y)) {
@@ -143,6 +146,11 @@
                 this._dragging = null;
             }
 
+            // Key up
+            if (this._keyUps.length > 0) {
+                keyUpCode = this._keyUps.pop().keyCode;
+            }
+
             if (over !== null) {
 
                 this._over = over;
@@ -153,14 +161,21 @@
                     this._dragging = <IMovable><IGameObject>over;
                 }
 
-                // Mouse wheel rotation
-                if (this._mouse.scrollY !== 0 && typeof (<IRotatable><IGameObject>over).angle !== "undefined") {
-                    (<IRotatable><IGameObject>over).angle += this._mouse.scrollY / 2;
+                // Rotation
+                if (typeof (<IRotatable><IGameObject>over).angle !== "undefined") {
+                    if (this._mouse.scrollY !== 0) {
+                        (<IRotatable><IGameObject>over).angle += this._mouse.scrollY / 2;
+                    } else if (keyUpCode === KeyboardKey.Up || keyUpCode === KeyboardKey.Left) {
+                        (<IRotatable><IGameObject>over).angle--;
+                    } else if (keyUpCode === KeyboardKey.Down || keyUpCode === KeyboardKey.Right) {
+                        (<IRotatable><IGameObject>over).angle++;
+                    }
                     shouldInvalidate = true;
                 }
 
             }
 
+            // Dragging
             if (this._dragging !== null) {
                 this._dragging.moveTo(this._mouse.x, this._mouse.y);
                 shouldInvalidate = true;
@@ -194,6 +209,13 @@
 
             var el: HTMLElement = this._renderer.element;
 
+            el.addEventListener("mouseover", (e: MouseEvent) => {
+
+                el.focus();
+                return false;
+
+            });
+
             el.addEventListener("mousemove", (e: MouseEvent) => {
 
                 this._mouse.over = true;
@@ -208,6 +230,8 @@
                 this._mouse.down = false;
                 this._mouse.x = -1;
                 this._mouse.y = -1;
+                el.blur();
+                return false;
 
             });
 
@@ -245,6 +269,12 @@
                 }, 100);
 
                 e.preventDefault();
+
+            });
+
+            el.addEventListener("keyup", (e: KeyboardEvent) => {
+
+                this._keyUps.unshift(e);
 
             });
 
