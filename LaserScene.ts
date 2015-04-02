@@ -205,6 +205,7 @@
             el.addEventListener("mouseleave", (e: MouseEvent) => {
 
                 this._mouse.over = false;
+                this._mouse.down = false;
                 this._mouse.x = -1;
                 this._mouse.y = -1;
 

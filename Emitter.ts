@@ -72,8 +72,8 @@ module rd3k.Laser {
 
         public draw(renderer: IRenderer): void {
 
-            this.laser.draw(renderer);
             renderer.renderEmitter(this);
+            this.laser.draw(renderer);
 
         }
 
