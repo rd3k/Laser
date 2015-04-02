@@ -36,7 +36,7 @@ module rd3k.Laser {
 
             this._rays.length = 0;
             this._hits.length = 0;
-            toProcess.push(Ray.create(this, this.colour, this._emitter.position, this._emitter.direction));
+            toProcess.push(Ray.create(this._emitter, this.colour, this._emitter.position, this._emitter.direction));
 
             while (toProcess.length > 0 && this._rays.length < Laser._maxBounces) {
 

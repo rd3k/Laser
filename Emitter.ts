@@ -1,6 +1,6 @@
 module rd3k.Laser {
 
-    export class Emitter implements IGameObject, IRotatable, IMovable, ISelectable {
+    export class Emitter implements IGameObject, ICollidable, IRotatable, IMovable, ISelectable {
 
         private _direction: Vector2;
         private _angle: number;
@@ -46,6 +46,18 @@ module rd3k.Laser {
             this.laser = new Laser(this);
             this.selected = false;
             this._width = 20;
+
+        }
+
+        public getIntersection(inA: Vector2, inB: Vector2, outVector: Vector2): boolean {
+
+            return Vector2.getCircleIntersection(inA, inB, this.position, this._width / 2, outVector);
+
+        }
+
+        public getRays(sourceRay: Ray): Array<Ray> {
+
+            return [];
 
         }
 
