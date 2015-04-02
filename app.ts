@@ -39,10 +39,11 @@ scene.addObjects(
 
 Laser.Ray.createPool(64);
 
+scene.invalidate();
+
 (function loop() {
 
     requestAnimationFrame(loop);
-    scene.invalidate();
     scene.update();
     scene.draw();
     Laser.Ray.resetPool();

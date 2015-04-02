@@ -7,7 +7,9 @@
         private _targets: Array<Target>;
         private _renderer: IRenderer;
         private _mouse: IMouseState;
+        private _mouseScrollTimeout: number;
         private _over: ISelectable;
+        private _dragging: IMovable;
 
         public get collidables(): Array<ICollidable> {
 
@@ -49,9 +51,12 @@
                 over: false,
                 down: false,
                 x: -1,
-                y: -1
+                y: -1,
+                scrollY: 0
             };
+            this._mouseScrollTimeout = null;
             this._over = null;
+            this._dragging = null;
 
             this._addEvents();
 
@@ -88,8 +93,6 @@
 
             var i: number = this._targets.length;
 
-            this._renderer.invalidate();
-
             while (i--) {
                 this._targets[i].invalidate();
             }
@@ -107,6 +110,7 @@
             var selectables: Array<ISelectable> = this.selectables;
             var i: number = selectables.length;
             var over: ISelectable = null;
+            var shouldInvalidate: boolean = false;
 
             while (i--) {
                 if (this.selectables[i].isMouseOver(this._mouse.x, this._mouse.y)) {
@@ -119,9 +123,39 @@
                 this._over.selected = false;
             }
 
+            // Stop drag
+            if (!this._mouse.down || !this._mouse.over) {
+                if (this._dragging) {
+                    shouldInvalidate = true;
+                }
+                this._dragging = null;
+            }
+
             if (over !== null) {
+
                 this._over = over;
                 over.selected = true;
+
+                // Start drag
+                if (this._dragging === null && this._mouse.down) {
+                    this._dragging = <IMovable><IGameObject>over;
+                }
+
+                // Mouse wheel rotation
+                if (this._mouse.scrollY !== 0 && typeof (<IRotatable><IGameObject>over).angle !== "undefined") {
+                    (<IRotatable><IGameObject>over).angle += this._mouse.scrollY / 2;
+                    shouldInvalidate = true;
+                }
+
+            }
+
+            if (this._dragging !== null) {
+                this._dragging.moveTo(this._mouse.x, this._mouse.y);
+                shouldInvalidate = true;
+            }
+
+            if (shouldInvalidate) {
+                this.invalidate();
             }
 
             i = this._objects.length;
@@ -135,6 +169,8 @@
         public draw(): void {
 
             var i: number = this._objects.length;
+
+            renderer.clear();
 
             while (i--) {
                 this._objects[i].draw(this._renderer);
@@ -171,6 +207,31 @@
             el.addEventListener("mouseup", (e: MouseEvent) => {
 
                 this._mouse.down = false;
+
+            });
+
+            el.addEventListener("mousewheel", (e: WheelEvent) => {
+
+                clearTimeout(this._mouseScrollTimeout);
+
+                if (e.deltaY > 0) {
+
+                    this._mouse.scrollY = 1;
+
+                } else if (e.deltaY < 0) {
+
+                    this._mouse.scrollY = -1;
+
+                }
+
+                this._mouseScrollTimeout = setTimeout(() => {
+
+                    this._mouseScrollTimeout = null;
+                    this._mouse.scrollY = 0;
+
+                }, 100);
+
+                e.preventDefault();
 
             });
 

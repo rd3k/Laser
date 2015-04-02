@@ -51,6 +51,17 @@ module rd3k.Laser {
 
         }
 
+        public moveTo(x: number, y: number) {
+
+            this._a.x += (x - this.position.x);
+            this._b.x += (x - this.position.x);
+            this._a.y += (y - this.position.y);
+            this._b.y += (y - this.position.y);
+            this.position.x = x;
+            this.position.y = y;
+
+        }
+
         public getIntersection(inA: Vector2, inB: Vector2, outVector: Vector2): boolean {
 
             return Vector2.getVectorIntersection(inA, inB, this.a, this.b, outVector);
@@ -69,7 +80,7 @@ module rd3k.Laser {
 
         }
 
-        public update(): void { }
+        public update(): void {}
 
         public draw(renderer: IRenderer): void {
 

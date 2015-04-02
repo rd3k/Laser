@@ -49,6 +49,13 @@ module rd3k.Laser {
 
         }
 
+        public moveTo(x: number, y: number) {
+
+            this.position.x = x;
+            this.position.y = y;
+
+        }
+
         public invalidate(): void {
 
             this.laser.calculateRays(this._scene.collidables);

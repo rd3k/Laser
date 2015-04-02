@@ -6,6 +6,7 @@
         down: boolean
         x: number
         y: number
+        scrollY: number
 
     }
 

@@ -20,7 +20,7 @@
 
         }
 
-        public invalidate(): void {
+        public clear(): void {
 
             this._context.clearRect(0, 0, this._width, this._height);
 
@@ -78,9 +78,13 @@
 
             var ctx = this._context;
 
+            ctx.save();
+            ctx.translate(mirror.position.x, mirror.position.y);
+            ctx.rotate(Util.toRadians(mirror.angle));
+
             if (mirror.selected) {
                 ctx.beginPath();
-                ctx.arc(mirror.position.x, mirror.position.y, mirror.width / 2, 0, 2 * Math.PI);
+                ctx.arc(0, 0, mirror.width / 2, 0, 2 * Math.PI);
                 ctx.fillStyle = "#eee";
                 ctx.fill();
             }
@@ -88,9 +92,10 @@
             ctx.beginPath();
             ctx.lineWidth = 4;
             ctx.strokeStyle = "#ccc";
-            ctx.moveTo(mirror.a.x, mirror.a.y);
-            ctx.lineTo(mirror.b.x, mirror.b.y);
+            ctx.moveTo(-mirror.width / 2, 0);
+            ctx.lineTo(mirror.width / 2, 0);
             ctx.stroke();
+            ctx.restore();
 
         }
 
@@ -98,9 +103,13 @@
 
             var ctx = this._context;
 
+            ctx.save();
+            ctx.translate(filter.position.x, filter.position.y);
+            ctx.rotate(Util.toRadians(filter.angle));
+
             if (filter.selected) {
                 ctx.beginPath();
-                ctx.arc(filter.position.x, filter.position.y, filter.width / 2, 0, 2 * Math.PI);
+                ctx.arc(0, 0, filter.width / 2, 0, 2 * Math.PI);
                 ctx.fillStyle = "#eee";
                 ctx.fill();
             }
@@ -108,9 +117,10 @@
             ctx.beginPath();
             ctx.lineWidth = 4;
             ctx.strokeStyle = filter.colour;
-            ctx.moveTo(filter.a.x, filter.a.y);
-            ctx.lineTo(filter.b.x, filter.b.y);
+            ctx.moveTo(-filter.width / 2, 0);
+            ctx.lineTo(filter.width / 2, 0);
             ctx.stroke();
+            ctx.restore();
 
         }
 
