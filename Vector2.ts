@@ -2,13 +2,58 @@ module rd3k.Laser {
 
     export class Vector2 {
 
+        private static _poolIndex: number;
+        private static _pool: Array<Vector2> = [];
+        private static _usePool: boolean = false;
+
         public get length(): number {
 
             return Math.sqrt((this.x * this.x) + (this.y * this.y));
 
         }
 
-        constructor(public x: number = 0, public y: number = 0) {}
+        constructor(public x: number = 0, public y: number = 0) {
+
+            console.count("Vector2");
+
+        }
+
+        public static resetPool(): void {
+
+            Vector2._poolIndex = 0;
+
+        }
+
+        public static createPool(quantity: number): void {
+
+            while (quantity--) {
+                Vector2._pool.push(new Vector2());
+            }
+
+            Vector2._poolIndex = 0;
+            Vector2._usePool = true;
+
+        }
+
+        public static create(x: number = 0, y: number = 0): Vector2 {
+
+            var vec: Vector2;
+
+            if (Vector2._usePool && Vector2._poolIndex < Vector2._pool.length) {
+
+                vec = Vector2._pool[Vector2._poolIndex++];
+                vec.x = x;
+                vec.y = y;
+
+            } else {
+
+                vec = new Vector2(x, y);
+
+            }
+
+            return vec;
+
+        }
 
         public static fromAngle(radians: number): Vector2 {
 
@@ -111,8 +156,8 @@ module rd3k.Laser {
             i1y = v0.y + t0 * dy;
             i2x = v0.x + t1 * dx;
             i2y = v0.y + t1 * dy;
-            d1 = new Vector2(i1x - v0.x, i1y - v0.y).length;
-            d2 = new Vector2(i2x - v0.x, i2y - v0.y).length;
+            d1 = Math.sqrt(((i1x - v0.x) * (i1x - v0.x)) + ((i1y - v0.y) * (i1y - v0.y)));
+            d2 = Math.sqrt(((i2x - v0.x) * (i2x - v0.x)) + ((i2y - v0.y) * (i2y - v0.y)));
 
             if (d1 < d2) {
 

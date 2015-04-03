@@ -4,8 +4,7 @@ module rd3k.Laser {
 
         private static _poolIndex: number;
         private static _pool: Array<Ray> = [];
-
-        public static usePool: boolean = false;
+        private static _usePool: boolean = false;
 
         public static resetPool(): void {
 
@@ -20,7 +19,7 @@ module rd3k.Laser {
             }
 
             Ray._poolIndex = 0;
-            Ray.usePool = true;
+            Ray._usePool = true;
 
         }
 
@@ -28,7 +27,7 @@ module rd3k.Laser {
 
             var ray: Ray;
 
-            if (Ray.usePool && Ray._poolIndex < Ray._pool.length) {
+            if (Ray._usePool && Ray._poolIndex < Ray._pool.length) {
 
                 ray = Ray._pool[Ray._poolIndex++];
                 ray.source = source;

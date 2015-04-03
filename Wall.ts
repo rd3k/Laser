@@ -6,7 +6,7 @@ module rd3k.Laser {
 
         public getIntersection(inA: Vector2, inB: Vector2, outVector: Vector2): boolean {
 
-            var intersection = new Vector2();
+            var intersection = Vector2.create();
 
             if ((Vector2.getVectorIntersection(inA, inB, this.bounds.topLeft, this.bounds.topRight, intersection) && intersection.y > inA.y) ||
             (Vector2.getVectorIntersection(inA, inB, this.bounds.bottomLeft, this.bounds.bottomRight, intersection) && intersection.y < inA.y) ||

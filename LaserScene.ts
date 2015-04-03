@@ -5,6 +5,7 @@
         private _objects: Array<IGameObject>;
         private _emitters: Array<Emitter>;
         private _targets: Array<Target>;
+        private _selectables: Array<ISelectable>;
         private _renderer: IRenderer;
         private _mouse: IMouseState;
         private _mouseScrollTimeout: number;
@@ -29,16 +30,7 @@
 
         public get selectables(): Array<ISelectable> {
 
-            var i = this._objects.length,
-                coll: Array<ISelectable> = [];
-
-            while (i--) {
-                if (typeof (<ISelectable>this._objects[i]).isMouseOver === "function") {
-                    coll.push(<ISelectable>this._objects[i]);
-                }
-            }
-
-            return coll;
+            return this._selectables;
 
         }
 
@@ -47,6 +39,7 @@
             this._objects = [];
             this._emitters = [];
             this._targets = [];
+            this._selectables = [];
             this._renderer = renderer;
             this._mouse = {
                 over: false,
@@ -91,6 +84,10 @@
 
             }
 
+            if (typeof (<ISelectable>object).isMouseOver === "function") {
+                this._selectables.push(<ISelectable>object);
+            }
+
         }
 
         public addObjects(...objects: Array<IGameObject>): void {
@@ -112,6 +109,10 @@
             }
 
             this._objects.splice(this._objects.indexOf(object), 1);
+
+            if (typeof (<ISelectable>object).isMouseOver === "function") {
+                this._selectables.splice(this._selectables.indexOf(<ISelectable>object), 1);
+            }
 
         }
 
@@ -140,8 +141,8 @@
             var keyUpCode: number = -1;
 
             while (i--) {
-                if (this.selectables[i].isMouseOver(this._mouse.x, this._mouse.y)) {
-                    over = this.selectables[i];
+                if (selectables[i].isMouseOver(this._mouse.x, this._mouse.y)) {
+                    over = selectables[i];
                     break;
                 }
             }

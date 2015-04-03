@@ -46,10 +46,11 @@ scene.addObjects(
 
 Laser.Ray.createPool(64);
 Laser.RayHit.createPool(16);
+Laser.Vector2.createPool(512);
 
 Laser.GUI.setTweakerElement(<HTMLElement>document.querySelector("#tweaker"));
 
-Laser.GUI.addTweakerEventListener("#delete", "mouseup",(e: MouseEvent, o: Laser.IGameObject) => {
+Laser.GUI.addTweakerEventListener("#delete", "mouseup", (e: MouseEvent, o: Laser.IGameObject) => {
     if (e.button === 0) {
         scene.removeObject(o);
         scene.invalidate();
@@ -74,5 +75,6 @@ scene.invalidate();
     scene.draw();
     Laser.Ray.resetPool();
     Laser.RayHit.resetPool();
+    Laser.Vector2.resetPool();
 
 })();

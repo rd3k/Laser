@@ -25,14 +25,15 @@ module rd3k.Laser {
 
             var toProcess: Array<Ray> = [],
                 ray: Ray,
-                rayFar: Vector2 = new Vector2(),
-                intersection: Vector2 = new Vector2(),
-                closestIntersection: Vector2 = new Vector2(),
+                rayFar: Vector2 = Vector2.create(),
+                intersection: Vector2 = Vector2.create(),
+                closestIntersection: Vector2 = Vector2.create(),
                 closestDistance: number,
                 closest: ICollidable,
                 obj: ICollidable,
                 newRays: Array<Ray> = null,
-                i: number;
+                i: number,
+                distance: number;
 
             this._rays.length = 0;
             this._hits.length = 0;
@@ -53,7 +54,8 @@ module rd3k.Laser {
 
                     if (obj !== ray.source && obj.getIntersection(ray.from, rayFar, intersection)) {
 
-                        var distance: number = new Vector2(intersection.x - ray.from.x, intersection.y - ray.from.y).length;
+                        distance = Math.sqrt(((intersection.x - ray.from.x) * (intersection.x - ray.from.x)) +
+                                             ((intersection.y - ray.from.y) * (intersection.y - ray.from.y)));
 
                         if (closest !== null && distance > closestDistance) {
                             continue;
