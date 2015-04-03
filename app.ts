@@ -14,6 +14,7 @@
 /// <reference path="Ray.ts" />
 /// <reference path="RayHit.ts" />
 /// <reference path="Laser.ts" />
+/// <reference path="LocalStorageStore.ts" />
 
 // ES6
 interface Function {
@@ -23,7 +24,8 @@ interface Function {
 import Laser = rd3k.Laser;
 
 var renderer = new Laser.CanvasRenderer(<HTMLCanvasElement>document.querySelector("#demo"));
-var scene = new Laser.Scene(renderer);
+var store = new Laser.LocalStorageStore();
+var scene = new Laser.Scene(renderer, store);
 
 scene.addObjects(
     new Laser.Emitter(scene, new Laser.Vector2(50, 50), "red"),
@@ -78,3 +80,5 @@ scene.invalidate();
     Laser.Vector2.resetPool();
 
 })();
+
+scene.save();

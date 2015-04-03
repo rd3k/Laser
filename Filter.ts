@@ -40,6 +40,18 @@ module rd3k.Laser {
 
         public dispose(): void {}
 
+        public toJSON(): IGameObjectJSON {
+
+            return {
+                type: "filter",
+                position: this.position,
+                colour: this.colour,
+                angle: this.angle,
+                width: this.width
+            };
+
+        }
+
     }
 
 }

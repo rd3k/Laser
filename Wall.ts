@@ -47,6 +47,18 @@ module rd3k.Laser {
 
         public dispose(): void {}
 
+        public toJSON(): IGameObjectJSON {
+
+            return {
+                type: "wall",
+                x: this.bounds.topLeft.x,
+                y: this.bounds.topLeft.y,
+                width: this.bounds.width,
+                height: this.bounds.height
+            };
+
+        }
+
     }
 
 }

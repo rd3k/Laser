@@ -1,6 +1,6 @@
 module rd3k.Laser {
 
-    export class Ray implements IGameObject {
+    export class Ray {
 
         private static _poolIndex: number;
         private static _pool: Array<Ray> = [];
@@ -53,15 +53,11 @@ module rd3k.Laser {
 
         }
 
-        public update(): void {}
-
         public draw(renderer: IRenderer): void {
 
             renderer.renderRay(this);
 
         }
-
-        public dispose(): void {}
 
     }
 

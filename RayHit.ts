@@ -1,6 +1,6 @@
 ﻿module rd3k.Laser {
 
-    export class RayHit implements IGameObject {
+    export class RayHit {
 
         private static _poolIndex: number;
         private static _pool: Array<RayHit> = [];

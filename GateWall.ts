@@ -22,6 +22,19 @@
 
         public dispose(): void {}
 
+        public toJSON(): IGameObjectJSON {
+
+            return {
+                type: "gatewall",
+                x: this.bounds.topLeft.x,
+                y: this.bounds.topLeft.y,
+                width: this.bounds.width,
+                height: this.bounds.height,
+                colour: this.colour
+            };
+
+        }
+
     }
 
 }

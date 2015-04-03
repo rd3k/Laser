@@ -40,6 +40,17 @@ module rd3k.Laser {
 
         public dispose(): void {}
 
+        public toJSON(): IGameObjectJSON {
+
+            return {
+                type: "mirror",
+                position: this.position,
+                angle: this.angle,
+                width: this.width
+            };
+
+        }
+
     }
 
 }

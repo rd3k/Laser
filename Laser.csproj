@@ -24,9 +24,11 @@
     <TypeScriptCompile Include="Emitter.ts" />
     <TypeScriptCompile Include="Filter.ts" />
     <TypeScriptCompile Include="GUI.ts" />
+    <TypeScriptCompile Include="IDataStore.ts" />
     <TypeScriptCompile Include="IGameObject.ts" />
     <TypeScriptCompile Include="GateWall.ts" />
     <TypeScriptCompile Include="ICollidable.ts" />
+    <TypeScriptCompile Include="IGameObjectJSON.ts" />
     <TypeScriptCompile Include="IMouseState.ts" />
     <TypeScriptCompile Include="IMovable.ts" />
     <TypeScriptCompile Include="IRenderer.ts" />
@@ -35,6 +37,7 @@
     <TypeScriptCompile Include="KeyboardKey.ts" />
     <TypeScriptCompile Include="Laser.ts" />
     <TypeScriptCompile Include="LaserScene.ts" />
+    <TypeScriptCompile Include="LocalStorageStore.ts" />
     <TypeScriptCompile Include="Mirror.ts" />
     <TypeScriptCompile Include="Ray.ts" />
     <TypeScriptCompile Include="RayHit.ts" />

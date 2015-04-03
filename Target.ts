@@ -1,9 +1,11 @@
 module rd3k.Laser {
 
-    export class Target implements IGameObject, ICollidable {
+    export class Target implements IGameObject, ICollidable, IMovable, ISelectable {
 
         private _radius: number;
         private _hit: boolean;
+
+        public selected: boolean;
 
         public get hit(): boolean {
 
@@ -37,7 +39,20 @@ module rd3k.Laser {
 
         }
 
-        public update(): void {}
+        public moveTo(x: number, y: number) {
+
+            this.position.x = x;
+            this.position.y = y;
+
+        }
+
+        public isMouseOver(x: number, y: number): boolean {
+
+            return Util.isPointInCircle(x, y, this.position.x, this.position.y, this._radius);
+
+        }
+
+        public update(): void { }
 
         public draw(renderer: IRenderer): void {
 
@@ -46,6 +61,15 @@ module rd3k.Laser {
         }
 
         public dispose(): void {}
+
+        public toJSON(): IGameObjectJSON {
+
+            return {
+                type: "target",
+                position: this.position
+            };
+
+        }
 
     }
 

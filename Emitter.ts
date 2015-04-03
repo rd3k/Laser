@@ -21,7 +21,7 @@ module rd3k.Laser {
 
             this._angle = value;
             this._direction.x = Math.cos(radians);
-            this._direction.y = Math.sin(radians)
+            this._direction.y = Math.sin(radians);
 
         }
 
@@ -96,6 +96,17 @@ module rd3k.Laser {
         public dispose(): void {
 
             this.laser.dispose();
+
+        }
+
+        public toJSON(): IGameObjectJSON {
+
+            return {
+                type: "emitter",
+                position: this.position,
+                colour: this.colour,
+                angle: this.angle
+            };
 
         }
 

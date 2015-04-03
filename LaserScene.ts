@@ -2,6 +2,7 @@
 
     export class Scene {
 
+        private _store: IDataStore;
         private _objects: Array<IGameObject>;
         private _emitters: Array<Emitter>;
         private _targets: Array<Target>;
@@ -34,8 +35,9 @@
 
         }
 
-        constructor(renderer: IRenderer) {
+        constructor(renderer: IRenderer, store: IDataStore) {
 
+            this._store = store;
             this._objects = [];
             this._emitters = [];
             this._targets = [];
@@ -272,6 +274,12 @@
             while (i--) {
                 this._objects[i].draw(this._renderer);
             }
+
+        }
+
+        public save(): void {
+
+            this._store.save("Name", JSON.stringify(this._objects));
 
         }
 
