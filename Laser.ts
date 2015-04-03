@@ -80,10 +80,11 @@ module rd3k.Laser {
                     ray.to.x = closestIntersection.x;
                     ray.to.y = closestIntersection.y;
                     newRays = closest.getRays(ray);
-                    toProcess.push.apply(toProcess, newRays);
 
-                    if (newRays.length === 0) {
+                    if (newRays === null) {
                         this._hits.push(RayHit.create(ray.to, ray.colour));
+                    } else {
+                        toProcess.push.apply(toProcess, newRays);
                     }
 
                 }

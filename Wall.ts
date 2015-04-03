@@ -33,7 +33,7 @@ module rd3k.Laser {
 
         public getRays(sourceRay: Ray): Array<Ray> {
 
-            return [];
+            return null;
 
         }
 
