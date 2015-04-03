@@ -2,7 +2,7 @@ module rd3k.Laser {
 
     export class Splitter extends Mirror implements IGameObject {
 
-        constructor(public position: Vector2, public angle: number) {
+        constructor(public position: Vector2, public angle: number = 0) {
 
             super(position, angle);
 
@@ -30,6 +30,8 @@ module rd3k.Laser {
             renderer.renderSplitter(this);
 
         }
+
+        public dispose(): void {}
 
     }
 

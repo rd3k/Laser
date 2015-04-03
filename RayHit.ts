@@ -54,6 +54,8 @@
 
         }
 
+        public dispose(): void {}
+
     }
 
 } 

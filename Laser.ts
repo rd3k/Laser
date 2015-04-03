@@ -108,6 +108,13 @@ module rd3k.Laser {
 
         }
 
+        public dispose(): void {
+
+            this._rays.length = 0;
+            this._hits.length = 0;
+
+        }
+
     }
 
 }

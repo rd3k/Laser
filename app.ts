@@ -1,4 +1,5 @@
 ﻿/// <reference path="util.ts" />
+/// <reference path="GUI.ts" />
 /// <reference path="Vector2.ts" />
 /// <reference path="Rectangle.ts" />
 /// <reference path="LaserScene.ts" />
@@ -13,6 +14,11 @@
 /// <reference path="Ray.ts" />
 /// <reference path="RayHit.ts" />
 /// <reference path="Laser.ts" />
+
+// ES6
+interface Function {
+    name: string
+}
 
 import Laser = rd3k.Laser;
 
@@ -41,6 +47,24 @@ scene.addObjects(
 Laser.Ray.createPool(64);
 Laser.RayHit.createPool(16);
 
+Laser.GUI.setTweakerElement(<HTMLElement>document.querySelector("#tweaker"));
+
+Laser.GUI.addTweakerEventListener("#delete", "mouseup",(e: MouseEvent, o: Laser.IGameObject) => {
+    if (e.button === 0) {
+        scene.removeObject(o);
+        scene.invalidate();
+        Laser.GUI.hideTweaker();
+    }
+});
+
+["red", "lime", "blue"].forEach(c => Laser.GUI.addTweakerEventListener(`#${c}`, "mouseup", (e: MouseEvent, o: Laser.IGameObject) => {
+    if (e.button === 0 && (o instanceof Laser.Emitter || o instanceof Laser.Filter)) {
+        o.colour = c;
+        scene.invalidate();
+        Laser.GUI.hideTweaker();
+    }
+}));
+
 scene.invalidate();
 
 (function loop() {
@@ -49,5 +73,6 @@ scene.invalidate();
     scene.update();
     scene.draw();
     Laser.Ray.resetPool();
+    Laser.RayHit.resetPool();
 
 })();

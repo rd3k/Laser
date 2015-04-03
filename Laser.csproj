@@ -22,6 +22,7 @@
     <TypeScriptCompile Include="CanvasRenderer.ts" />
     <TypeScriptCompile Include="Emitter.ts" />
     <TypeScriptCompile Include="Filter.ts" />
+    <TypeScriptCompile Include="GUI.ts" />
     <TypeScriptCompile Include="IGameObject.ts" />
     <TypeScriptCompile Include="GateWall.ts" />
     <TypeScriptCompile Include="ICollidable.ts" />

@@ -4,7 +4,8 @@
 
         update(): void
         draw(renderer: IRenderer): void
+        dispose(): void
 
     }
 
-} 
+}

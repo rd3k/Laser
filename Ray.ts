@@ -62,6 +62,8 @@ module rd3k.Laser {
 
         }
 
+        public dispose(): void {}
+
     }
 
 }

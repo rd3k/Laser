@@ -20,6 +20,8 @@
 
         }
 
+        public dispose(): void {}
+
     }
 
 }

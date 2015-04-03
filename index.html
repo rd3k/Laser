@@ -4,11 +4,11 @@
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width,initial-scale=1">
-        <meta name="robots" content="noodp,noydir" />
+        <meta name="robots" content="noodp,noydir"/>
         <title>Lasers</title>
         <style type="text/css">
-            #demo {
-                border: 1px #ccc solid;
+
+            #container {
                 position: absolute;
                 top: 50%;
                 left: 50%;
@@ -17,12 +17,91 @@
                 -ms-transform: translate(-50%, -50%);
                 -o-transform: translate(-50%, -50%);
                 transform: translate(-50%, -50%);
+            }
+
+            canvas {
+                box-shadow: 0 0 25px #ddd;
                 outline: 0;
             }
+
+            a {
+                cursor: pointer;
+            }
+
+            #tweaker {
+                position: absolute;
+                /*min-width: 100px;
+                min-height: 50px;*/
+                display: none;
+                background: #ccc;
+                border-radius: 5px;
+                opacity: 0.9;
+                text-align: center;
+                -webkit-transform: translate(-50%, -50%);
+                -moz-transform: translate(-50%, -50%);
+                -ms-transform: translate(-50%, -50%);
+                -o-transform: translate(-50%, -50%);
+                transform: translate(-50%, -50%);
+            }
+
+            #tweaker.visible {
+                display: inline-block;
+            }
+
+            #tweaker > div {
+                display: none;
+            }
+
+            #tweaker.emitter #colour-tweaker,
+            #tweaker.filter #colour-tweaker {
+                display: block;
+            }
+
+            #colour-tweaker {
+                font-size: 0;
+                padding: 5px 5px 0;
+            }
+
+            #colour-tweaker a {
+                display: inline-block;
+                width: 20px;
+                height: 20px;
+                margin: 2px;
+            }
+
+            #red {
+                background: red;
+            }
+
+            #lime {
+                background: lime;
+            }
+
+            #blue {
+                background: blue;
+            }
+
+            #delete {
+                display: inline-block;
+                padding: 3px;
+                margin: 5px;
+                background: #ddd;
+            }
+
         </style>
     </head>
     <body>
-        <canvas id="demo" width="800" height="600" tabindex="0"></canvas>
+        <div id="container">
+            <div id="tweaker">
+                <div id="colour-tweaker">
+                    <a id="red"></a>
+                    <a id="lime"></a>
+                    <a id="blue"></a>
+                </div>
+                <a id="delete">Delete</a>
+            </div>
+            <canvas id="demo" width="800" height="600" tabindex="0"></canvas>
+        </div>
         <script src="lib/hidpi-canvas.min.js"></script>
         <script src="build.js"></script>
     </body>

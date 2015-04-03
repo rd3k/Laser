@@ -89,6 +89,12 @@ module rd3k.Laser {
 
         }
 
+        public dispose(): void {
+
+            this.laser.dispose();
+
+        }
+
     }
 
 }
