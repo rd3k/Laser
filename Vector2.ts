@@ -76,6 +76,20 @@ module rd3k.Laser {
 
         }
 
+        public rotateSelf(radians: number): Vector2 {
+
+            var cos: number = Math.cos(radians),
+                sin: number = Math.sin(radians),
+                x: number = (this.x * cos) - (this.y * sin),
+                y: number = (this.x * sin) + (this.y * cos);
+
+            this.x = x;
+            this.y = y;
+
+            return this;
+
+        }
+
         public reflect(normal: Vector2): Vector2 {
 
             var i: number = 2 * this.dot(normal);

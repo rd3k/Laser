@@ -22,7 +22,29 @@
 
         public clear(): void {
 
+            var ctx = this._context;
+            var i: number = this._width;
+
             this._context.clearRect(0, 0, this._width, this._height);
+
+            ctx.lineWidth = 1;
+            ctx.strokeStyle = "#f4f4f4";
+
+            while (i -= 20) {
+                ctx.beginPath();
+                ctx.moveTo(i, 0);
+                ctx.lineTo(i, this._height);
+                ctx.stroke();
+            }
+
+            i = this._height;
+
+            while (i -= 20) {
+                ctx.beginPath();
+                ctx.moveTo(0, i);
+                ctx.lineTo(this._width, i);
+                ctx.stroke();
+            }
 
         }
 

@@ -35,10 +35,10 @@ module rd3k.Laser {
         public set angle(value: number) {
 
             this._angle = value;
-            this._a = Vector2.create(-this._width / 2, 0).rotate(Util.toRadians(value));
+            this._a = Vector2.create(-this._width / 2, 0).rotateSelf(Util.toRadians(value));
             this._a.x += this.position.x;
             this._a.y += this.position.y;
-            this._b = Vector2.create(this._width / 2, 0).rotate(Util.toRadians(value));
+            this._b = Vector2.create(this._width / 2, 0).rotateSelf(Util.toRadians(value));
             this._b.x += this.position.x;
             this._b.y += this.position.y;
 

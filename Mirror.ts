@@ -45,10 +45,10 @@ module rd3k.Laser {
 
             this._angle = value;
             this._normal = Vector2.fromAngle(radians - (Math.PI / 2));
-            this._a = Vector2.create(-this._width / 2, 0).rotate(radians);
+            this._a = Vector2.create(-this._width / 2, 0).rotateSelf(radians);
             this._a.x += this.position.x;
             this._a.y += this.position.y;
-            this._b = Vector2.create(this._width / 2, 0).rotate(radians);
+            this._b = Vector2.create(this._width / 2, 0).rotateSelf(radians);
             this._b.x += this.position.x;
             this._b.y += this.position.y;
 

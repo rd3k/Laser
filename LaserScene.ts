@@ -225,8 +225,10 @@
 
             // Dragging
             if (this._dragging !== null) {
-                this._dragging.moveTo(this._mouse.x, this._mouse.y);
-                shouldInvalidate = true;
+                if (this._dragging.position.x !== this._mouse.x || this._dragging.position.y !== this._mouse.y) {
+                    this._dragging.moveTo(this._mouse.x, this._mouse.y);
+                    shouldInvalidate = true;
+                }
             }
 
             if (shouldInvalidate) {
