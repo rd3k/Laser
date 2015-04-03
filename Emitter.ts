@@ -17,8 +17,11 @@ module rd3k.Laser {
 
         public set angle(value: number) {
 
+            var radians = Util.toRadians(value);
+
             this._angle = value;
-            this._direction = Vector2.fromAngle(Util.toRadians(value));
+            this._direction.x = Math.cos(radians);
+            this._direction.y = Math.sin(radians)
 
         }
 
@@ -42,6 +45,7 @@ module rd3k.Laser {
 
         constructor(private _scene: Scene, public position: Vector2, public colour: string, angle: number = 0) {
 
+            this._direction = new Vector2();
             this.angle = angle;
             this.laser = new Laser(this);
             this.selected = false;

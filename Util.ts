@@ -22,7 +22,7 @@ module rd3k.Laser.Util {
 
     export function toRadians(degrees: number) {
 
-        return degrees * (Math.PI / 180);
+        return wrapRadians(degrees * (Math.PI / 180));
 
     }
 

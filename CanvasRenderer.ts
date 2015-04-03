@@ -48,6 +48,12 @@
 
         }
 
+        public setCursor(cursor: string): void {
+
+            this._canvas.style.cursor = cursor;
+
+        }
+
         public renderEmitter(emitter: Emitter): void {
 
             var ctx = this._context;

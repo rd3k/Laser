@@ -4,6 +4,7 @@
 
         element: HTMLElement
         clear(): void
+        setCursor(cursor: string): void
         renderEmitter(emitter: Emitter): void
         renderWall(wall: Wall): void
         renderTarget(target: Target): void

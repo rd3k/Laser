@@ -12,11 +12,7 @@ module rd3k.Laser {
 
         }
 
-        constructor(public x: number = 0, public y: number = 0) {
-
-            console.count("Vector2");
-
-        }
+        constructor(public x: number = 0, public y: number = 0) {}
 
         public static resetPool(): void {
 
@@ -52,12 +48,6 @@ module rd3k.Laser {
             }
 
             return vec;
-
-        }
-
-        public static fromAngle(radians: number): Vector2 {
-
-            return new Vector2(Math.cos(radians), Math.sin(radians));
 
         }
 

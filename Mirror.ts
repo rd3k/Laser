@@ -1,74 +1,14 @@
 module rd3k.Laser {
 
-    export class Mirror implements IGameObject, ICollidable, IMovable, IRotatable, ISelectable {
-
-        private _a: Vector2;
-        private _b: Vector2;
-        private _angle: number;
-        private _normal: Vector2;
+    export class Mirror extends AB implements IGameObject, ICollidable, IMovable, IRotatable, ISelectable {
 
         public selected: boolean;
 
-        public get normal(): Vector2 {
+        constructor(position: Vector2, angle: number = 0, width = 40) {
 
-            return this._normal;
+            super(position, angle, width);
 
-        }
-
-        public get a(): Vector2 {
-
-            return this._a;
-
-        }
-
-        public get b(): Vector2 {
-
-            return this._b;
-
-        }
-
-        public get angle(): number {
-
-            return this._angle;
-
-        }
-
-        public get width(): number {
-
-            return this._width;
-
-        }
-
-        public set angle(value: number) {
-
-            var radians: number = Util.toRadians(value);
-
-            this._angle = value;
-            this._normal = Vector2.fromAngle(radians - (Math.PI / 2));
-            this._a = Vector2.create(-this._width / 2, 0).rotateSelf(radians);
-            this._a.x += this.position.x;
-            this._a.y += this.position.y;
-            this._b = Vector2.create(this._width / 2, 0).rotateSelf(radians);
-            this._b.x += this.position.x;
-            this._b.y += this.position.y;
-
-        }
-
-        constructor(public position: Vector2, angle: number = 0, private _width = 40) {
-
-            this.angle = angle;
             this.selected = false;
-
-        }
-
-        public moveTo(x: number, y: number) {
-
-            this._a.x += (x - this.position.x);
-            this._b.x += (x - this.position.x);
-            this._a.y += (y - this.position.y);
-            this._b.y += (y - this.position.y);
-            this.position.x = x;
-            this.position.y = y;
 
         }
 

@@ -138,6 +138,7 @@
             var i: number = selectables.length;
             var over: ISelectable = null;
             var shouldInvalidate: boolean = false;
+            var keyUp: KeyboardEvent = null;
             var keyUpCode: number = -1;
 
             while (i--) {
@@ -152,8 +153,8 @@
             }
 
             // Stop drag
-            if (!this._mouse.down || !this._mouse.over) {
-                if (this._dragging) {
+            if ((!this._mouse.down || !this._mouse.over) && this._dragging) {
+                if (this._dragging.position.x !== this._mouse.x || this._dragging.position.y !== this._mouse.y) {
                     shouldInvalidate = true;
                 }
                 this._dragging = null;
@@ -161,7 +162,8 @@
 
             // Key up
             if (this._keyUps.length > 0) {
-                keyUpCode = this._keyUps.pop().keyCode;
+                keyUp = this._keyUps.pop();
+                keyUpCode = keyUp.keyCode;
             }
 
             if (over === null) {
@@ -201,16 +203,34 @@
 
                 // Rotation
                 if (typeof (<IRotatable><IGameObject>over).angle !== "undefined") {
+
                     if (this._mouse.scrollY !== 0) {
+
                         (<IRotatable><IGameObject>over).angle += this._mouse.scrollY / 2;
                         shouldInvalidate = true;
+
                     } else if (keyUpCode === KeyboardKey.Up || keyUpCode === KeyboardKey.Left) {
-                        (<IRotatable><IGameObject>over).angle--;
+
+                        if (keyUp.shiftKey) {
+                            (<IRotatable><IGameObject>over).angle = (Math.ceil((<IRotatable><IGameObject>over).angle / 22.5) * 22.5) - 22.5;
+                        } else {
+                            (<IRotatable><IGameObject>over).angle--;
+                        }
+
                         shouldInvalidate = true;
+
                     } else if (keyUpCode === KeyboardKey.Down || keyUpCode === KeyboardKey.Right) {
-                        (<IRotatable><IGameObject>over).angle++;
+
+                        if (keyUp.shiftKey) {
+                            (<IRotatable><IGameObject>over).angle = (Math.floor((<IRotatable><IGameObject>over).angle / 22.5) * 22.5) + 22.5;
+                        } else {
+                            (<IRotatable><IGameObject>over).angle++;
+                        }
+
                         shouldInvalidate = true;
+
                     }
+
                 }
 
                 // Delete
@@ -224,12 +244,12 @@
             }
 
             // Dragging
-            if (this._dragging !== null) {
-                if (this._dragging.position.x !== this._mouse.x || this._dragging.position.y !== this._mouse.y) {
-                    this._dragging.moveTo(this._mouse.x, this._mouse.y);
-                    shouldInvalidate = true;
-                }
+            if (this._dragging !== null && (this._dragging.position.x !== this._mouse.x || this._dragging.position.y !== this._mouse.y)) {
+                this._dragging.moveTo(this._mouse.x, this._mouse.y);
+                shouldInvalidate = true;
             }
+
+            this._renderer.setCursor(this._over !== null || this._dragging ? "move" : "");
 
             if (shouldInvalidate) {
                 this.invalidate();

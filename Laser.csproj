@@ -18,6 +18,7 @@
     <IISExpressUseClassicPipelineMode />
   </PropertyGroup>
   <ItemGroup>
+    <TypeScriptCompile Include="AB.ts" />
     <TypeScriptCompile Include="app.ts" />
     <TypeScriptCompile Include="CanvasRenderer.ts" />
     <TypeScriptCompile Include="Emitter.ts" />

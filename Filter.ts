@@ -1,64 +1,14 @@
 module rd3k.Laser {
 
-    export class Filter implements IGameObject, ICollidable, IMovable, IRotatable, ISelectable {
-
-        private _a: Vector2;
-        private _b: Vector2;
-        private _angle: number;
+    export class Filter extends AB implements IGameObject, ICollidable, IMovable, IRotatable, ISelectable {
 
         public selected: boolean;
 
-        public get a(): Vector2 {
+        constructor(position: Vector2, public colour: string, angle: number = 0, width = 40) {
 
-            return this._a;
+            super(position, angle, width);
 
-        }
-
-        public get b(): Vector2 {
-
-            return this._b;
-
-        }
-
-        public get angle(): number {
-
-            return this._angle;
-
-        }
-
-        public get width(): number {
-
-            return this._width;
-
-        }
-
-        public set angle(value: number) {
-
-            this._angle = value;
-            this._a = Vector2.create(-this._width / 2, 0).rotateSelf(Util.toRadians(value));
-            this._a.x += this.position.x;
-            this._a.y += this.position.y;
-            this._b = Vector2.create(this._width / 2, 0).rotateSelf(Util.toRadians(value));
-            this._b.x += this.position.x;
-            this._b.y += this.position.y;
-
-        }
-
-        constructor(public position: Vector2, public colour: string, angle: number = 0, private _width = 40) {
-
-            this.angle = angle;
             this.selected = false;
-
-        }
-
-        public moveTo(x: number, y: number) {
-
-            this._a.x += (x - this.position.x);
-            this._b.x += (x - this.position.x);
-            this._a.y += (y - this.position.y);
-            this._b.y += (y - this.position.y);
-            this.position.x = x;
-            this.position.y = y;
 
         }
 

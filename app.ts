@@ -46,7 +46,7 @@ scene.addObjects(
 
 Laser.Ray.createPool(64);
 Laser.RayHit.createPool(16);
-Laser.Vector2.createPool(512);
+Laser.Vector2.createPool(64);
 
 Laser.GUI.setTweakerElement(<HTMLElement>document.querySelector("#tweaker"));
 
