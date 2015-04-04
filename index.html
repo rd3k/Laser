@@ -87,6 +87,23 @@
                 background: #ddd;
             }
 
+            #drop {
+                position: absolute;
+                width: 100%;
+                height: 100%;
+                background: rgba(0, 0, 0, 0.1);
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                opacity: 0;
+                transition: opacity 0.2s;
+                pointer-events: none;
+            }
+
+            #drop.visible {
+                opacity: 1;
+            }
+
         </style>
     </head>
     <body>
@@ -98,6 +115,9 @@
                     <a id="blue"></a>
                 </div>
                 <a id="delete">Delete</a>
+            </div>
+            <div id="drop">
+                Drop level file to load!
             </div>
             <canvas id="demo" width="800" height="600" tabindex="0"></canvas>
         </div>

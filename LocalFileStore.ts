@@ -6,6 +6,7 @@
 
             el.addEventListener("dragenter", this._onDragEnter.bind(this));
             el.addEventListener("dragover", this._onDragOver.bind(this));
+            el.addEventListener("dragleave", this._onDragLeave.bind(this));
             el.addEventListener("drop", this._onDrop.bind(this));
 
         }
@@ -23,7 +24,7 @@
         }
         private _onDragEnter(e: DragEvent): void {
 
-            // console.log(e);
+            GUI.showDropOverlay();
 
         }
 
@@ -33,10 +34,18 @@
 
         }
 
+        private _onDragLeave(e: DragEvent): void {
+
+            GUI.hideDropOverlay();
+
+        }
+
         private _onDrop(e: DragEvent): void {
 
             var files: FileList = e.dataTransfer.files;
             var reader: FileReader;
+
+            GUI.hideDropOverlay();
 
             if (files.length === 0 || files[0].type !== "application/json") {
                 return;

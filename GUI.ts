@@ -2,6 +2,7 @@
 
     var _tweakerElement: HTMLElement = null;
     var _tweakingObject: IGameObject = null;
+    var _dropOverlayElement: HTMLElement = null;
 
     export function setTweakerElement(value: HTMLElement) {
 
@@ -40,6 +41,28 @@
         if (_tweakerElement) {
             _tweakingObject = null;
             _tweakerElement.className = "";
+        }
+
+    }
+
+    export function setDropOverlayElement(value: HTMLElement): void {
+
+        _dropOverlayElement = value;
+
+    }
+
+    export function showDropOverlay(): void {
+
+        if (_dropOverlayElement) {
+            _dropOverlayElement.classList.add("visible");
+        }
+
+    }
+
+    export function hideDropOverlay(): void {
+
+        if (_dropOverlayElement) {
+            _dropOverlayElement.classList.remove("visible");
         }
 
     }

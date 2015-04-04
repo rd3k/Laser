@@ -56,6 +56,7 @@ Laser.RayHit.createPool(16);
 Laser.Vector2.createPool(64);
 
 Laser.GUI.setTweakerElement(<HTMLElement>document.querySelector("#tweaker"));
+Laser.GUI.setDropOverlayElement(<HTMLElement>document.querySelector("#drop"));
 
 Laser.GUI.addTweakerEventListener("#delete", "mouseup", (e: MouseEvent, o: Laser.IGameObject) => {
     if (e.button === 0) {
