@@ -34,6 +34,12 @@
 
         private _onDragEnter(e: DragEvent): void {
 
+            var files: FileList = e.dataTransfer.files;
+
+            if (files.length === 0 || files[0].type !== "application/json") {
+                return;
+            }
+
             GUI.showDropOverlay();
 
         }
@@ -54,6 +60,9 @@
 
             var files: FileList = e.dataTransfer.files;
             var reader: FileReader;
+
+            e.preventDefault();
+            e.stopPropagation();
 
             GUI.hideDropOverlay();
 
@@ -91,9 +100,6 @@
             });
 
             reader.readAsText(files[0]);
-
-            e.preventDefault();
-            e.stopPropagation();
 
         }
 
