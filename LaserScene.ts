@@ -12,6 +12,7 @@
         private _over: ISelectable;
         private _dragging: IMovable;
         private _keyUps: Array<KeyboardEvent>;
+        private _shiftKey: boolean;
 
         public get collidables(): Array<ICollidable> {
 
@@ -52,6 +53,7 @@
             this._over = null;
             this._dragging = null;
             this._keyUps = [];
+            this._shiftKey = false;
 
             /*this.addObjects(
                 new Wall(new Rectangle(0, 0, renderer.element.clientWidth, 1)),
@@ -259,7 +261,11 @@
 
             // Dragging
             if (this._dragging !== null && (this._dragging.position.x !== this._mouse.x || this._dragging.position.y !== this._mouse.y)) {
-                this._dragging.moveTo(this._mouse.x, this._mouse.y);
+                if (this._shiftKey) {
+                    this._dragging.moveTo(Math.round(this._mouse.x / 20) * 20, Math.round(this._mouse.y / 20) * 20);
+                } else {
+                    this._dragging.moveTo(this._mouse.x, this._mouse.y);
+                }
                 shouldInvalidate = true;
             }
 
@@ -351,7 +357,7 @@
             el.addEventListener("mousedown", this._onMouseDown.bind(this));
             el.addEventListener("mouseup", this._onMouseUp.bind(this));
             el.addEventListener("mousewheel", this._onMouseWheel.bind(this));
-            el.addEventListener("keydown", this._onKeyDown);
+            el.addEventListener("keydown", this._onKeyDown.bind(this));
             el.addEventListener("keyup", this._onKeyUp.bind(this));
             el.addEventListener("contextmenu", this._onContextMenu.bind(this));
 
@@ -428,11 +434,14 @@
                 e.preventDefault();
             }
 
+            this._shiftKey = e.shiftKey;
+
         }
 
         private _onKeyUp(e: KeyboardEvent): void {
 
             this._keyUps.unshift(e);
+            this._shiftKey = e.shiftKey;
 
         }
 
