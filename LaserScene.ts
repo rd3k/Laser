@@ -2,7 +2,6 @@
 
     export class Scene {
 
-        private _store: IDataStore;
         private _objects: Array<IGameObject>;
         private _emitters: Array<Emitter>;
         private _targets: Array<Target>;
@@ -35,9 +34,8 @@
 
         }
 
-        constructor(renderer: IRenderer, store: IDataStore) {
+        constructor(renderer: IRenderer) {
 
-            this._store = store;
             this._objects = [];
             this._emitters = [];
             this._targets = [];
@@ -55,12 +53,12 @@
             this._dragging = null;
             this._keyUps = [];
 
-            this.addObjects(
+            /*this.addObjects(
                 new Wall(new Rectangle(0, 0, renderer.element.clientWidth, 1)),
                 new Wall(new Rectangle(0, renderer.element.clientHeight - 1, renderer.element.clientWidth, 1)),
                 new Wall(new Rectangle(0, 0, 1, renderer.element.clientHeight)),
                 new Wall(new Rectangle(renderer.element.clientWidth - 1, 0, 1, renderer.element.clientHeight))
-            );
+            );*/
 
             this._addEvents();
 
@@ -104,6 +102,8 @@
 
         public removeObject(object: IGameObject): void {
 
+            object.dispose();
+
             if (object instanceof Emitter) {
                 this._emitters.splice(this._emitters.indexOf(object), 1);
             } else if (object instanceof Target) {
@@ -115,6 +115,15 @@
             if (typeof (<ISelectable>object).isMouseOver === "function") {
                 this._selectables.splice(this._selectables.indexOf(<ISelectable>object), 1);
             }
+
+        }
+
+        public empty(): void {
+
+            this._objects.length = 0;
+            this._emitters.length = 0;
+            this._targets.length = 0;
+            this._selectables.length = 0;
 
         }
 
@@ -189,6 +198,10 @@
                         this.addObject(new Splitter(new Vector2(this._mouse.x, this._mouse.y)));
                         shouldInvalidate = true;
                         break;
+                    case KeyboardKey.T:
+                        this.addObject(new Target(new Vector2(this._mouse.x, this._mouse.y)));
+                        shouldInvalidate = true;
+                        break;
                     case (keyUpCode > 0 ? keyUpCode : null):
                         // console.log(keyUpCode);
                 }
@@ -238,7 +251,6 @@
                 // Delete
                 if (keyUpCode === KeyboardKey.Backspace) {
                     this._over = null;
-                    over.dispose();
                     this.removeObject(over);
                     shouldInvalidate = true;
                 }
@@ -277,9 +289,55 @@
 
         }
 
-        public save(): void {
+        public save(store: IDataStore): void {
 
-            this._store.save("Name", JSON.stringify(this._objects));
+            store.save("Name", JSON.stringify(this._objects));
+
+        }
+
+        public load(store: IDataStore, name: string): void {
+
+            var data = store.load(name);
+
+            console.log(data);
+
+        }
+
+        public loadFromJSON(data: Array<any>): void {
+
+            var i: number = data.length,
+                object: any;
+
+            this.empty();
+
+            while (i--) {
+                object = data[i];
+                switch (object.type) {
+                    case "emitter":
+                        this.addObject(new Emitter(this, new Vector2(object.position.x, object.position.y), object.colour, object.angle))
+                        break;
+                    case "mirror":
+                        this.addObject(new Mirror(new Vector2(object.position.x, object.position.y), object.angle, object.width));
+                        break;
+                    case "filter":
+                        this.addObject(new Filter(new Vector2(object.position.x, object.position.y), object.colour, object.angle, object.width));
+                        break;
+                    case "splitter":
+                        this.addObject(new Splitter(new Vector2(object.position.x, object.position.y), object.angle));
+                        break;
+                    case "target":
+                        this.addObject(new Target(new Vector2(object.position.x, object.position.y)));
+                        break;
+                    case "wall":
+                        this.addObject(new Wall(new Rectangle(object.x, object.y, object.width, object.height)));
+                        break;
+                    case "gatewall":
+                        this.addObject(new GateWall(new Rectangle(object.x, object.y, object.width, object.height), object.colour));
+                        break;
+                }
+            }
+
+            this.invalidate();
 
         }
 

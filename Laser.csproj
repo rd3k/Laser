@@ -37,6 +37,7 @@
     <TypeScriptCompile Include="KeyboardKey.ts" />
     <TypeScriptCompile Include="Laser.ts" />
     <TypeScriptCompile Include="LaserScene.ts" />
+    <TypeScriptCompile Include="LocalFileStore.ts" />
     <TypeScriptCompile Include="LocalStorageStore.ts" />
     <TypeScriptCompile Include="Mirror.ts" />
     <TypeScriptCompile Include="Ray.ts" />

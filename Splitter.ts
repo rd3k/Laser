@@ -33,6 +33,16 @@ module rd3k.Laser {
 
         public dispose(): void {}
 
+        public toJSON(): IGameObjectJSON {
+
+            return {
+                type: "splitter",
+                position: this.position,
+                angle: this.angle,
+                width: this.width
+            };
+
+        }
     }
 
 }

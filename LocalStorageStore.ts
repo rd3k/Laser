@@ -4,13 +4,13 @@
 
         public save(name: string, data: string): void {
 
-            console.log(name, data);
+            localStorage.setItem(name, data);
 
         }
 
         public load(name: string): string {
 
-            return "";
+            return localStorage.getItem(name);
 
         }
 

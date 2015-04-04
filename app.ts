@@ -15,6 +15,7 @@
 /// <reference path="RayHit.ts" />
 /// <reference path="Laser.ts" />
 /// <reference path="LocalStorageStore.ts" />
+/// <reference path="LocalFileStore.ts" />
 
 // ES6
 interface Function {
@@ -23,10 +24,14 @@ interface Function {
 
 import Laser = rd3k.Laser;
 
-var renderer = new Laser.CanvasRenderer(<HTMLCanvasElement>document.querySelector("#demo"));
-var store = new Laser.LocalStorageStore();
-var scene = new Laser.Scene(renderer, store);
+var canvas = <HTMLCanvasElement>document.querySelector("#demo")
+var renderer = new Laser.CanvasRenderer(canvas);
+var scene = new Laser.Scene(renderer);
 
+var browserStore = new Laser.LocalStorageStore();
+var fileStore = new Laser.LocalFileStore(scene, canvas);
+
+/*
 scene.addObjects(
     new Laser.Emitter(scene, new Laser.Vector2(50, 50), "red"),
     new Laser.Emitter(scene, new Laser.Vector2(300, 400), "lime", -90),
@@ -44,7 +49,7 @@ scene.addObjects(
     new Laser.GateWall(new Laser.Rectangle(500, 400, 40, 50), "blue"),
     new Laser.Wall(new Laser.Rectangle(500, 450, 40, 150)),
     new Laser.GateWall(new Laser.Rectangle(75, 125, 50, 50), "red")
-);
+);*/
 
 Laser.Ray.createPool(64);
 Laser.RayHit.createPool(16);
@@ -80,5 +85,3 @@ scene.invalidate();
     Laser.Vector2.resetPool();
 
 })();
-
-scene.save();
