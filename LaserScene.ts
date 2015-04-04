@@ -35,6 +35,18 @@
 
         }
 
+        public get objects(): Array<IGameObject> {
+
+            return this._objects;
+
+        }
+
+        public get renderer(): IRenderer {
+
+            return this._renderer;
+
+        }
+
         constructor(renderer: IRenderer) {
 
             this._objects = [];
@@ -54,13 +66,6 @@
             this._dragging = null;
             this._keyUps = [];
             this._shiftKey = false;
-
-            /*this.addObjects(
-                new Wall(new Rectangle(0, 0, renderer.element.clientWidth, 1)),
-                new Wall(new Rectangle(0, renderer.element.clientHeight - 1, renderer.element.clientWidth, 1)),
-                new Wall(new Rectangle(0, 0, 1, renderer.element.clientHeight)),
-                new Wall(new Rectangle(renderer.element.clientWidth - 1, 0, 1, renderer.element.clientHeight))
-            );*/
 
             this._addEvents();
 
@@ -292,20 +297,6 @@
             while (i--) {
                 this._objects[i].draw(this._renderer);
             }
-
-        }
-
-        public save(store: IDataStore): void {
-
-            store.save("Name", JSON.stringify(this._objects));
-
-        }
-
-        public load(store: IDataStore, name: string): void {
-
-            var data = store.load(name);
-
-            console.log(data);
 
         }
 

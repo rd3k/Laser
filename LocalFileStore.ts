@@ -2,7 +2,9 @@
 
     export class LocalFileStore implements IDataStore {
 
-        constructor(private _scene: Scene, el: HTMLElement) {
+        constructor(private _scene: Scene) {
+
+            var el: HTMLElement = _scene.renderer.element;
 
             el.addEventListener("dragenter", this._onDragEnter.bind(this));
             el.addEventListener("dragover", this._onDragOver.bind(this));
@@ -11,17 +13,25 @@
 
         }
 
-        public save(name: string, data: string): void {
+        public save(name: string): void {
 
-            console.log(name, data);
+            var url = URL.createObjectURL(new Blob([JSON.stringify(this._scene.objects)], {
+                type: "application/json",
+                lastModified: Date.now()
+            }));
+
+            var link = document.createElement("a");
+
+            link.href = url;
+            link.download = name + ".json";
+            document.body.firstElementChild.appendChild(link);
+            link.click();
+            link.parentNode.removeChild(link);
 
         }
 
-        public load(name: string): string {
+        public load(): void {}
 
-            return "";
-
-        }
         private _onDragEnter(e: DragEvent): void {
 
             GUI.showDropOverlay();
@@ -51,7 +61,6 @@
                 return;
             }
 
-            console.log(files[0]);
             reader = new FileReader();
 
             reader.addEventListener("load", (e: ProgressEvent) => {
@@ -60,7 +69,7 @@
                 var parsedData: any;
 
                 try {
-                    
+
                     parsedData = JSON.parse(data);
 
                     if (Array.isArray(parsedData)) {
@@ -68,7 +77,7 @@
                     } else {
                         throw Error;
                     }
-                    
+
                 } catch (ex) {
                     debugger;
                 }

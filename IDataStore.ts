@@ -2,8 +2,8 @@
 
     export interface IDataStore {
 
-        save(name: string, data: string): void
-        load(name: string): string
+        save(name: string): void
+        load(name?: string): void
 
     }
 
