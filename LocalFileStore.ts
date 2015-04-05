@@ -35,8 +35,9 @@
         private _onDragEnter(e: DragEvent): void {
 
             var files: FileList = e.dataTransfer.files;
+            var items: Array<any> = (<any>e.dataTransfer).items || [];
 
-            if (files.length === 0 || files[0].type !== "application/json") {
+            if ((files.length === 0 || files[0].type !== "application/json") && (items.length === 0 || items[0].type !== "application/json" )) {
                 return;
             }
 
