@@ -28,9 +28,8 @@
         if (_tweakerElement) {
 
             _tweakingObject = object;
-            _tweakerElement.classList.add("visible");
+            _tweakerElement.className = "visible " + object.constructor.name.toLowerCase();
             _tweakerElement.setAttribute("style", `left:${x}px; top:${y}px;`);
-            _tweakerElement.classList.add(object.constructor.name.toLowerCase());
 
         }
 
