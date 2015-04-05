@@ -14,14 +14,15 @@ Play with lasers
 
 - Modification
     - Click and drag objects to move them around
+    - Hold shift whilst dragging to snap to grid
     - When hovering over a object, right click to delete it or change its settings:
         - Emitter: change laser colour
         - Filter: change filter colour (output ray colour)
         - Wall: change which colour of rays are able to travel through it
     - When hovering over a rotatable object (emitter, mirror, filter or splitter), rotate it by:
         - Using the mouse wheel
-        - Pressing and releasing the up or left arrow keys to rotate anticlockwise
-        - Pressing and releasing the right or down arrow keys to rotate clockwise
+        - Pressing and releasing the up or left arrow keys to rotate anticlockwise (hold shift to snap to 22.5 degree intervals)
+        - Pressing and releasing the right or down arrow keys to rotate clockwise (hold shift to snap to 22.5 degree intervals)
 
 - Save/load
     - Modify the level name using the input field beneath the level
