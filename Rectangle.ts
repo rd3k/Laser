@@ -43,6 +43,12 @@ module rd3k.Laser {
 
         }
 
+        public get position(): Vector2 {
+
+            return Vector2.create(this.topLeft.x + (this.width / 2), this.topLeft.y + (this.height / 2));
+
+        }
+
         public set top(value: number) {
 
             this.topLeft.y = value;
@@ -88,9 +94,8 @@ module rd3k.Laser {
 
         public moveTo(x: number, y: number): void {
 
-            //debugger;
-            var xDiff = x - this.topLeft.x;
-            var yDiff = y - this.topLeft.y;
+            var xDiff = x - this.topLeft.x - this.width / 2;
+            var yDiff = y - this.topLeft.y - this.height / 2;
             var left = this.topLeft.x + xDiff;
             var right = this.topRight.x + xDiff;
             var top = this.topLeft.y + yDiff;

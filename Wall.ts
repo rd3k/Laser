@@ -6,7 +6,7 @@ module rd3k.Laser {
 
         public get position(): Vector2 {
 
-            return this.bounds.topLeft;
+            return this.bounds.position;
 
         }
 
