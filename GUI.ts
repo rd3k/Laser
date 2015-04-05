@@ -4,6 +4,8 @@
     var _tweakingObject: IGameObject = null;
     var _dropOverlayElement: HTMLElement = null;
 
+    export var levelNameElement: HTMLInputElement;
+
     export function setTweakerElement(value: HTMLElement) {
 
         _tweakerElement = value;

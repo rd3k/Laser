@@ -159,7 +159,7 @@
 
             if (splitter.selected) {
                 ctx.beginPath();
-                ctx.arc(splitter.position.x, splitter.position.y, width, 0, 2 * Math.PI);
+                ctx.arc(splitter.position.x, splitter.position.y, splitter.width / 2, 0, 2 * Math.PI);
                 ctx.fillStyle = "#eee";
                 ctx.fill();
             }

@@ -42,6 +42,7 @@ Laser.Vector2.createPool(64);
 
 Laser.GUI.setTweakerElement(<HTMLElement>document.querySelector("#tweaker"));
 Laser.GUI.setDropOverlayElement(<HTMLElement>document.querySelector("#drop"));
+Laser.GUI.levelNameElement = <HTMLInputElement>(document.querySelector("#level-name"));
 
 Laser.GUI.addTweakerEventListener("#delete", "mouseup", (e: MouseEvent, o: Laser.IGameObject) => {
     if (e.button === 0) {
@@ -58,6 +59,31 @@ Laser.GUI.addTweakerEventListener("#delete", "mouseup", (e: MouseEvent, o: Laser
         Laser.GUI.hideTweaker();
     }
 }));
+
+document.querySelector("#clear").addEventListener("mouseup", (e: MouseEvent) => {
+
+    if (confirm("Remove all objects?")) {
+        scene.empty.call(scene);
+    }
+
+});
+
+document.querySelector("#save").addEventListener("mouseup", (e: MouseEvent) => {
+
+    var name = Laser.GUI.levelNameElement.value;
+
+    if (scene.objects.length === 0) {
+        alert("Level is empty!");
+        return;
+    }
+
+    if (name.trim().length === 0) {
+        name = "unnamed-" + Date.now();
+    }
+
+    fileStore.save(name);
+
+});
 
 scene.invalidate();
 

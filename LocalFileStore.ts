@@ -60,6 +60,7 @@
 
             var files: FileList = e.dataTransfer.files;
             var reader: FileReader;
+            var name: string;
 
             e.preventDefault();
             e.stopPropagation();
@@ -71,6 +72,8 @@
             }
 
             reader = new FileReader();
+            name = files[0].name;
+            name = name.substr(0, name.lastIndexOf('.'));
 
             reader.addEventListener("load", (e: ProgressEvent) => {
 
@@ -83,6 +86,7 @@
 
                     if (Array.isArray(parsedData)) {
                         this._scene.loadFromJSON(<Array<Object>>parsedData);
+                        GUI.levelNameElement.value = name;
                     } else {
                         throw Error;
                     }
