@@ -1,8 +1,20 @@
 module rd3k.Laser {
 
-    export class Wall implements IGameObject, ICollidable {
+    export class Wall implements IGameObject, ICollidable, ISelectable, IMovable {
 
-        constructor(public bounds: Rectangle) {}
+        public selected: boolean;
+
+        public get position(): Vector2 {
+
+            return this.bounds.topLeft;
+
+        }
+
+        constructor(public bounds: Rectangle) {
+
+            this.selected = false;
+
+        }
 
         public getIntersection(inA: Vector2, inB: Vector2, outVector: Vector2): boolean {
 
@@ -34,6 +46,18 @@ module rd3k.Laser {
         public getRays(sourceRay: Ray): Array<Ray> {
 
             return null;
+
+        }
+
+        public isMouseOver(x: number, y: number): boolean {
+
+            return this.bounds.containsPoint(x, y);
+
+        }
+
+        public moveTo(x: number, y: number): void {
+
+            this.bounds.moveTo(x, y);
 
         }
 

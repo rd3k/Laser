@@ -43,6 +43,34 @@ module rd3k.Laser {
 
         }
 
+        public set top(value: number) {
+
+            this.topLeft.y = value;
+            this.topRight.y = value;
+
+        }
+
+        public set bottom(value: number) {
+
+            this.bottomLeft.y = value;
+            this.bottomRight.y = value;
+
+        }
+
+        public set left(value: number) {
+
+            this.topLeft.x = value;
+            this.bottomLeft.x = value;
+
+        }
+
+        public set right(value: number) {
+
+            this.topRight.x = value;
+            this.bottomRight.x = value;
+
+        }
+
         constructor(x: number, y: number, width: number, height: number) {
 
             this._topLeft = new Vector2(x, y);
@@ -55,6 +83,23 @@ module rd3k.Laser {
         public containsPoint(x: number, y: number) {
 
             return (x >= this.topLeft.x && y >= this.topLeft.y && x < this.topRight.x && y < this.bottomRight.y);
+
+        }
+
+        public moveTo(x: number, y: number): void {
+
+            //debugger;
+            var xDiff = x - this.topLeft.x;
+            var yDiff = y - this.topLeft.y;
+            var left = this.topLeft.x + xDiff;
+            var right = this.topRight.x + xDiff;
+            var top = this.topLeft.y + yDiff;
+            var bottom = this.bottomRight.y + yDiff;
+
+            this.top = top;
+            this.bottom = bottom;
+            this.left = left;
+            this.right = right;
 
         }
 

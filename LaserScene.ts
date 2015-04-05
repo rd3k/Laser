@@ -13,6 +13,12 @@
         private _dragging: IMovable;
         private _keyUps: Array<KeyboardEvent>;
         private _shiftKey: boolean;
+        private _drawing: boolean;
+        private _dragOffsetX: number = 0;
+        private _dragOffsetY: number = 0;
+        private _drawingWall: Wall;
+        private _drawingFromX = 0;
+        private _drawingFromY = 0;
 
         public get collidables(): Array<ICollidable> {
 
@@ -66,6 +72,8 @@
             this._dragging = null;
             this._keyUps = [];
             this._shiftKey = false;
+            this._drawing = false;
+            this._drawingWall = null;
 
             this._addEvents();
 
@@ -188,39 +196,87 @@
 
                 this._over = null;
 
-                switch (keyUpCode) {
-                    case KeyboardKey.E:
-                        this.addObject(new Emitter(this, new Vector2(this._mouse.x, this._mouse.y), "red", -90));
-                        shouldInvalidate = true;
-                        break;
-                    case KeyboardKey.M:
-                        this.addObject(new Mirror(new Vector2(this._mouse.x, this._mouse.y)));
-                        shouldInvalidate = true;
-                        break;
-                    case KeyboardKey.F:
-                        this.addObject(new Filter(new Vector2(this._mouse.x, this._mouse.y), "red"));
-                        shouldInvalidate = true;
-                        break;
-                    case KeyboardKey.S:
-                        this.addObject(new Splitter(new Vector2(this._mouse.x, this._mouse.y)));
-                        shouldInvalidate = true;
-                        break;
-                    case KeyboardKey.T:
-                        this.addObject(new Target(new Vector2(this._mouse.x, this._mouse.y)));
-                        shouldInvalidate = true;
-                        break;
-                    case (keyUpCode > 0 ? keyUpCode : null):
-                        // console.log(keyUpCode);
-                }
-
             } else {
 
                 this._over = over;
                 over.selected = true;
 
+            }
+
+            switch (keyUpCode) {
+                case KeyboardKey.E:
+                    this.addObject(new Emitter(this, new Vector2(this._mouse.x, this._mouse.y), "red", -90));
+                    shouldInvalidate = true;
+                    break;
+                case KeyboardKey.M:
+                    this.addObject(new Mirror(new Vector2(this._mouse.x, this._mouse.y)));
+                    shouldInvalidate = true;
+                    break;
+                case KeyboardKey.F:
+                    this.addObject(new Filter(new Vector2(this._mouse.x, this._mouse.y), "red"));
+                    shouldInvalidate = true;
+                    break;
+                case KeyboardKey.S:
+                    this.addObject(new Splitter(new Vector2(this._mouse.x, this._mouse.y)));
+                    shouldInvalidate = true;
+                    break;
+                case KeyboardKey.T:
+                    this.addObject(new Target(new Vector2(this._mouse.x, this._mouse.y)));
+                    shouldInvalidate = true;
+                    break;
+                case KeyboardKey.W:
+                    if (this._drawing) {
+
+                        this._drawing = false;
+
+                        // Delete if nothing drawn
+                        if (this._drawingWall.bounds.width === 0 || this._drawingWall.bounds.height === 0) {
+                            this.removeObject(this._drawingWall);
+                        }
+
+                        this._drawingWall = null;
+
+                    }
+                    break;
+                case (keyUpCode > 0 ? keyUpCode : null):
+                    // console.log(keyUpCode);
+            }
+
+            if (this._drawing) {
+
+                if (this._drawingWall === null) {
+                    this._drawingWall = new Wall(new Rectangle(this._mouse.x, this._mouse.y, 1, 1));
+                    this.addObject(this._drawingWall);
+                }
+
+                var newX = this._mouse.x;
+                var newY = this._mouse.y;
+                var fromX = this._drawingFromX;
+                var fromY = this._drawingFromY;
+
+                if (newX > fromX) {
+                    this._drawingWall.bounds.right = newX;
+                } else if (newX < fromX) {
+                    this._drawingWall.bounds.left = newX;
+                }
+
+                if (newY > fromY) {
+                    this._drawingWall.bounds.bottom = newY;
+                } else if (newY < fromY) {
+                    this._drawingWall.bounds.top = newY;
+                }
+
+                shouldInvalidate = true;
+
+            }
+
+            if (this._over !== null) {
+
                 // Start drag
                 if (this._dragging === null && this._mouse.down && typeof (<IMovable><IGameObject>over).moveTo === "function") {
                     this._dragging = <IMovable><IGameObject>over;
+                    this._dragOffsetX = this._mouse.x - this._dragging.position.x;
+                    this._dragOffsetY = this._mouse.y - this._dragging.position.y;
                 }
 
                 // Rotation
@@ -233,7 +289,7 @@
 
                     } else if (keyUpCode === KeyboardKey.Up || keyUpCode === KeyboardKey.Left) {
 
-                        if (keyUp.shiftKey) {
+                        if (this._shiftKey) {
                             (<IRotatable><IGameObject>over).angle = (Math.ceil((<IRotatable><IGameObject>over).angle / 22.5) * 22.5) - 22.5;
                         } else {
                             (<IRotatable><IGameObject>over).angle--;
@@ -243,7 +299,7 @@
 
                     } else if (keyUpCode === KeyboardKey.Down || keyUpCode === KeyboardKey.Right) {
 
-                        if (keyUp.shiftKey) {
+                        if (this._shiftKey) {
                             (<IRotatable><IGameObject>over).angle = (Math.floor((<IRotatable><IGameObject>over).angle / 22.5) * 22.5) + 22.5;
                         } else {
                             (<IRotatable><IGameObject>over).angle++;
@@ -267,9 +323,9 @@
             // Dragging
             if (this._dragging !== null && (this._dragging.position.x !== this._mouse.x || this._dragging.position.y !== this._mouse.y)) {
                 if (this._shiftKey) {
-                    this._dragging.moveTo(Math.round(this._mouse.x / 20) * 20, Math.round(this._mouse.y / 20) * 20);
+                    this._dragging.moveTo(Math.round((this._mouse.x - this._dragOffsetX) / 20) * 20, Math.round((this._mouse.y - this._dragOffsetY) / 20) * 20);
                 } else {
-                    this._dragging.moveTo(this._mouse.x, this._mouse.y);
+                    this._dragging.moveTo(this._mouse.x - this._dragOffsetX, this._mouse.y - this._dragOffsetY);
                 }
                 shouldInvalidate = true;
             }
@@ -375,6 +431,8 @@
             this._mouse.down = false;
             this._mouse.x = -1;
             this._mouse.y = -1;
+            this._drawing = false;
+            this._drawingWall = null;
             (<HTMLElement>e.target).blur();
             return false;
 
@@ -423,6 +481,10 @@
 
             if (e.keyCode === KeyboardKey.Backspace) {
                 e.preventDefault();
+            } else if (!this._drawing && e.keyCode === KeyboardKey.W) {
+                this._drawing = true;
+                this._drawingFromX = this._mouse.x;
+                this._drawingFromY = this._mouse.y;
             }
 
             this._shiftKey = e.shiftKey;
