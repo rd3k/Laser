@@ -155,10 +155,11 @@
         public renderSplitter(splitter: Splitter): void {
 
             var ctx = this._context;
+            var width = splitter.width * Math.cos(Math.PI / 4);
 
             if (splitter.selected) {
                 ctx.beginPath();
-                ctx.arc(splitter.position.x, splitter.position.y, splitter.width * Math.cos(Math.PI / 4), 0, 2 * Math.PI);
+                ctx.arc(splitter.position.x, splitter.position.y, width, 0, 2 * Math.PI);
                 ctx.fillStyle = "#eee";
                 ctx.fill();
             }
@@ -169,12 +170,13 @@
             ctx.fillStyle = "#eee";
             ctx.strokeStyle = "#333";
             ctx.translate(splitter.position.x, splitter.position.y);
-            ctx.rotate(Util.toRadians(splitter.angle - 45));
-            ctx.strokeRect(-(splitter.width / 2), -(splitter.width / 2), splitter.width, splitter.width);
-            ctx.fill();
-            ctx.moveTo(-(splitter.width / 2), -(splitter.width / 2));
-            ctx.lineTo(splitter.width / 2, splitter.width / 2);
+            ctx.rotate(Util.toRadians(splitter.angle));
+            ctx.moveTo(-splitter.width / 2, 0);
+            ctx.lineTo(splitter.width / 2, 0);
             ctx.stroke();
+            ctx.rotate(Util.toRadians(45));
+            ctx.strokeRect(-(width / 2), -(width / 2), width, width);
+            ctx.fill();
             ctx.restore();
 
         }
