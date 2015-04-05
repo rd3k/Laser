@@ -10,7 +10,7 @@ module rd3k.Laser {
 
         }
 
-        constructor(public bounds: Rectangle) {
+        constructor(public bounds: Rectangle, public colour: string = "grey") {
 
             this.selected = false;
 
@@ -45,7 +45,7 @@ module rd3k.Laser {
 
         public getRays(sourceRay: Ray): Array<Ray> {
 
-            return null;
+            return sourceRay.colour === this.colour ? [Ray.create(this, sourceRay.colour, sourceRay.to, sourceRay.rayVector)] : null;
 
         }
 
@@ -78,7 +78,8 @@ module rd3k.Laser {
                 x: this.bounds.topLeft.x,
                 y: this.bounds.topLeft.y,
                 width: this.bounds.width,
-                height: this.bounds.height
+                height: this.bounds.height,
+                colour: this.colour
             };
 
         }

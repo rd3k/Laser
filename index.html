@@ -55,8 +55,14 @@
             }
 
             #tweaker.emitter #colour-tweaker,
-            #tweaker.filter #colour-tweaker {
+            #tweaker.filter #colour-tweaker,
+            #tweaker.wall #colour-tweaker {
                 display: block;
+            }
+
+            #tweaker.emitter #grey,
+            #tweaker.filter #grey {
+                display: none;
             }
 
             #colour-tweaker {
@@ -81,6 +87,10 @@
 
             #blue {
                 background: blue;
+            }
+
+            #grey {
+                background: grey;
             }
 
             .btn {
@@ -142,6 +152,7 @@
                     <a id="red"></a>
                     <a id="lime"></a>
                     <a id="blue"></a>
+                    <a id="grey"></a>
                 </div>
                 <a id="delete" class="btn">Delete</a>
             </div>

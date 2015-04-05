@@ -82,7 +82,7 @@
             var ctx = this._context;
 
             ctx.beginPath();
-            ctx.fillStyle = "#333";
+            ctx.fillStyle = wall.colour;
             ctx.fillRect(wall.bounds.topLeft.x, wall.bounds.topLeft.y, wall.bounds.width, wall.bounds.height);
             ctx.fill();
 
@@ -178,17 +178,6 @@
             ctx.strokeRect(-(width / 2), -(width / 2), width, width);
             ctx.fill();
             ctx.restore();
-
-        }
-
-        public renderGateWall(gateWall: GateWall): void {
-
-            var ctx = this._context;
-
-            ctx.beginPath();
-            ctx.fillStyle = gateWall.colour;
-            ctx.fillRect(gateWall.bounds.topLeft.x, gateWall.bounds.topLeft.y, gateWall.bounds.width, gateWall.bounds.height);
-            ctx.fill();
 
         }
 

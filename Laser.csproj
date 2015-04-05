@@ -26,7 +26,6 @@
     <TypeScriptCompile Include="GUI.ts" />
     <TypeScriptCompile Include="IDataStore.ts" />
     <TypeScriptCompile Include="IGameObject.ts" />
-    <TypeScriptCompile Include="GateWall.ts" />
     <TypeScriptCompile Include="ICollidable.ts" />
     <TypeScriptCompile Include="IGameObjectJSON.ts" />
     <TypeScriptCompile Include="IMouseState.ts" />

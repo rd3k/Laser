@@ -382,10 +382,7 @@
                         this.addObject(new Target(new Vector2(object.position.x, object.position.y)));
                         break;
                     case "wall":
-                        this.addObject(new Wall(new Rectangle(object.x, object.y, object.width, object.height)));
-                        break;
-                    case "gatewall":
-                        this.addObject(new GateWall(new Rectangle(object.x, object.y, object.width, object.height), object.colour));
+                        this.addObject(new Wall(new Rectangle(object.x, object.y, object.width, object.height), object.colour));
                         break;
                 }
             }

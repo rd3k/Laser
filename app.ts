@@ -8,7 +8,6 @@
 /// <reference path="Mirror.ts" />
 /// <reference path="Filter.ts" />
 /// <reference path="Wall.ts" />
-/// <reference path="GateWall.ts" />
 /// <reference path="Target.ts" />
 /// <reference path="Splitter.ts" />
 /// <reference path="Ray.ts" />
@@ -52,8 +51,8 @@ Laser.GUI.addTweakerEventListener("#delete", "mouseup", (e: MouseEvent, o: Laser
     }
 });
 
-["red", "lime", "blue"].forEach(c => Laser.GUI.addTweakerEventListener(`#${c}`, "mouseup", (e: MouseEvent, o: Laser.IGameObject) => {
-    if (e.button === 0 && (o instanceof Laser.Emitter || o instanceof Laser.Filter)) {
+["red", "lime", "blue", "grey"].forEach(c => Laser.GUI.addTweakerEventListener(`#${c}`, "mouseup", (e: MouseEvent, o: Laser.IGameObject) => {
+    if (e.button === 0 && (o instanceof Laser.Emitter || o instanceof Laser.Filter || o instanceof Laser.Wall)) {
         o.colour = c;
         scene.invalidate();
         Laser.GUI.hideTweaker();
@@ -62,7 +61,7 @@ Laser.GUI.addTweakerEventListener("#delete", "mouseup", (e: MouseEvent, o: Laser
 
 document.querySelector("#clear").addEventListener("mouseup", (e: MouseEvent) => {
 
-    if (confirm("Remove all objects?")) {
+    if (scene.objects.length > 0 && confirm("Remove all objects?")) {
         scene.empty.call(scene);
     }
 
