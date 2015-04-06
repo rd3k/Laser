@@ -54,6 +54,20 @@
 
         }
 
+        public toImageData(): string {
+
+            var tempCanvas = <HTMLCanvasElement>document.createElement("canvas"),
+                tempContext = tempCanvas.getContext("2d"),
+                tempImage = new Image();
+
+            tempCanvas.width = 200;
+            tempCanvas.height = 150;
+            tempImage.src = this._canvas.toDataURL();
+            tempContext.drawImage(tempImage, 0, 0, 200, 150);
+            return tempCanvas.toDataURL();
+
+        }
+
         public renderEmitter(emitter: Emitter): void {
 
             var ctx = this._context;

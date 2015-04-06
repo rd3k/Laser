@@ -4,6 +4,7 @@
 
         element: HTMLElement
         clear(): void
+        toImageData(): string
         setCursor(cursor: string): void
         renderEmitter(emitter: Emitter): void
         renderWall(wall: Wall): void
@@ -16,4 +17,4 @@
 
     }
 
-} 
+}

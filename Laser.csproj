@@ -28,6 +28,7 @@
     <TypeScriptCompile Include="IGameObject.ts" />
     <TypeScriptCompile Include="ICollidable.ts" />
     <TypeScriptCompile Include="IGameObjectJSON.ts" />
+    <TypeScriptCompile Include="ILocalStorageEntry.ts" />
     <TypeScriptCompile Include="IMouseState.ts" />
     <TypeScriptCompile Include="IMovable.ts" />
     <TypeScriptCompile Include="IRenderer.ts" />

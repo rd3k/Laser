@@ -6,7 +6,13 @@
 
         public save(name: string): void {
 
-            localStorage.setItem(name, JSON.stringify(this._scene.objects));
+            try {
+                localStorage.setItem(name, JSON.stringify(this._scene.objects));
+                localStorage.setItem(name + "_img", this._scene.renderer.toImageData());
+                alert("Level has been saved to localStorage!");
+            } catch (ex) {
+                debugger;
+            }
 
         }
 
@@ -28,6 +34,25 @@
             } catch (ex) {
                 debugger;
             }
+
+        }
+
+        public getList(): Array<ILocalStorageEntry> {
+
+            var levels = Object.keys(localStorage),
+                data: Array<ILocalStorageEntry> = [],
+                i = levels.length;
+
+            while (i--) {
+                if (!/_img$/.test(levels[i])) {
+                    data.push({
+                        name: levels[i],
+                        image: localStorage.hasOwnProperty(levels[i] + "_img") ? localStorage[levels[i] + "_img"] : ""
+                    });
+                }
+            }
+
+            return data;
 
         }
 

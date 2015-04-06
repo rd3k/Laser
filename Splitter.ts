@@ -1,6 +1,6 @@
 module rd3k.Laser {
 
-    export class Splitter extends Mirror implements IGameObject {
+    export class Splitter extends Mirror implements IGameObject, ICollidable, IMovable, IRotatable, ISelectable {
 
         constructor(public position: Vector2, public angle: number = 0) {
 
