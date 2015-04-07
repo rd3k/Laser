@@ -8,6 +8,7 @@
     export var levelNameElement: HTMLInputElement = null;
     export var creationsOverlayElement: HTMLElement = null;
     export var creationsListElement: HTMLElement = null;
+    export var infoElement: HTMLElement = null;
 
     export function setTweakerElement(value: HTMLElement) {
 
@@ -98,4 +99,28 @@
         }
 
     }
+
+    export function showInfo(): void {
+
+        if (hudElement && infoElement) {
+
+            hudElement.classList.add("hidden");
+
+            setTimeout(() => {
+                infoElement.classList.add("visible");
+            }, 200);
+
+        }
+
+    }
+
+    export function hideInfo(): void {
+
+        if (hudElement && infoElement) {
+            hudElement.classList.remove("hidden");
+            infoElement.classList.remove("visible");
+        }
+
+    }
+
 }

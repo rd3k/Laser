@@ -32,6 +32,18 @@
                 cursor: pointer;
             }
 
+            kbd {
+                background: #eee;
+            }
+
+            ul {
+                padding-left: 20px;
+            }
+
+            li {
+                margin-top: 10px;
+            }
+
             #tweaker {
                 position: absolute;
                 display: none;
@@ -104,19 +116,21 @@
                 background: #fff;
             }
 
-            #drop, #creations {
+            #drop, #creations, #info {
                 position: absolute;
                 width: 100%;
                 height: 100%;
                 background: rgba(0, 0, 0, 0.5);
+                opacity: 0;
+                visibility: hidden;
                 display: -webkit-flex;
                 display: flex;
                 -webkit-align-items: center;
                 align-items: center;
                 -webkit-justify-content: center;
                 justify-content: center;
-                opacity: 0;
-                visibility: hidden;
+                text-align: center;
+
             }
 
             #drop {
@@ -125,11 +139,11 @@
                 pointer-events: none;
             }
 
-            #creations {
+            #creations, #info {
                 transition: opacity 0.5s;
             }
 
-            #drop.visible, #creations.visible {
+            #drop.visible, #creations.visible, #info.visible {
                 opacity: 1;
                 visibility: visible;
             }
@@ -157,7 +171,7 @@
                 margin: 15px;
                 padding: 0;
                 font-size: 18px;
-                width: 400px;
+                width: 350px;
             }
 
             #hud .btn {
@@ -166,22 +180,25 @@
                 padding: 14px;
             }
 
-            #creations-inner {
+            .modal-inner {
                 width: 700px;
-                height: 500px;
+                height: 525px;
                 background: #eee;
-                text-align: center;
                 box-shadow: 0 0 5px #000;
+                padding: 25px 25px 0;
+                overflow-y: scroll;
+            }
+
+            .modal-content {
+                height: 400px;
+                background: #ccc;
+                padding-top: 10px;
+                overflow-y: scroll;
             }
 
             #creations-list {
-                height: 370px;
-                background: #ccc;
-                margin: 25px 25px 0;
-                text-align: center;
-                padding-top: 10px;
                 font-size: 0;
-                overflow-y: scroll;
+                text-align: center;
             }
 
             #creations-list:empty:after {
@@ -218,7 +235,12 @@
                 border-color: #000;
             }
 
-            #close-creations {
+            #info .modal-content {
+                text-align: left;
+                padding: 10px 25px 0;
+            }
+
+            .modal-close {
                 padding: 14px;
                 margin: 30px;
             }
@@ -241,9 +263,59 @@
             <a id="delete" class="btn">Delete</a>
         </div>
         <div id="creations">
-            <div id="creations-inner">
-                <div id="creations-list"></div>
-                <a id="close-creations" class="btn">Close</a>
+            <div class="modal-inner">
+                <div id="creations-list" class="modal-content"></div>
+                <a id="close-creations" class="btn modal-close">Close</a>
+            </div>
+        </div>
+        <div id="info">
+            <div class="modal-inner">
+                <div class="modal-content">
+                    <h2>Creation</h2>
+                    <ul>
+                        <li>Press and release <kbd>e</kbd> to create a emitter</li>
+                        <li>Press and release <kbd>m</kbd> to create a mirror</li>
+                        <li>Press and release <kbd>f</kbd> to create a filter</li>
+                        <li>Press and release <kbd>s</kbd> to create a splitter</li>
+                        <li>Press and release <kbd>t</kbd> to create a target</li>
+                        <li>Hold <kbd>w</kbd> whilst moving the mouse to create a wall on release</li>
+                    </ul>
+                    <h2>Modification</h2>
+                    <ul>
+                        <li>Click and drag objects to move them around</li>
+                        <li>Hold shift whilst dragging to snap to grid</li>
+                        <li>
+                            When hovering over a object, right click to delete it or change its settings:
+                            <ul>
+                                <li>Emitter: change laser colour</li>
+                                <li>Filter: change filter colour (output ray colour)</li>
+                                <li>Wall: change which colour of rays are able to travel through it</li>
+                            </ul>
+                        </li>
+                        <li>
+                            When hovering over a rotatable object (emitter, mirror, filter or splitter), rotate it by:
+                            <ul>
+                                <li>Using the mouse wheel</li>
+                                <li>Pressing and releasing the up or left arrow keys to rotate anticlockwise (hold <kbd>Shift</kbd> to snap to 22.5 degree intervals)</li>
+                                <li>Pressing and releasing the right or down arrow keys to rotate clockwise (hold <kbd>Shift</kbd> to snap to 22.5 degree intervals)</li>
+                            </ul>
+                        </li>
+                    </ul>
+                    <h2>Deletion</h2>
+                    <ul>
+                        <li>Press and release backspace when hovering over an object to delete it</li>
+                        <li>Use the "Clear" button beneath the level to remove all objects (after confirmation)</li>
+                    </ul>
+                    <h2>Level management</h2>
+                    <ul>
+                        <li>Modify the level name using the input field beneath the level</li>
+                        <li>Use the "Download" button beneath the level to download a level (JSON file)</li>
+                        <li>Use the "Save" button beneath the level to save the current level in the browser</li>
+                        <li>Use the "Load" button beneath the level to load a level that was previously saved with "Save"</li>
+                        <li>Drag and drop a JSON file previously created by the application on to the level display to load it</li>
+                    </ul>
+                </div>
+                <a id="close-info" class="btn modal-close">Close</a>
             </div>
         </div>
         <div id="drop">
@@ -257,6 +329,7 @@
             <a id="save" class="btn">Save</a>
             <a id="clear" class="btn">Clear</a>
             <a id="new" class="btn">New</a>
+            <a id="help" class="btn">Help</a>
         </div>
     </div>
     <template id="creation-item-tpl"><a class="creations-item"><img src=""/><span></span></a></template>

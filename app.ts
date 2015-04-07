@@ -70,6 +70,7 @@ Laser.GUI.creationsOverlayElement = <HTMLElement>document.querySelector("#creati
 Laser.GUI.creationsListElement = <HTMLElement>document.querySelector("#creations-list");
 Laser.GUI.hudElement = <HTMLElement>document.querySelector("#hud");
 Laser.GUI.levelNameElement = <HTMLInputElement>(document.querySelector("#level-name"));
+Laser.GUI.infoElement = <HTMLElement>(document.querySelector("#info"));
 
 Laser.GUI.addTweakerEventListener("#delete", "mouseup", (e: MouseEvent, o: Laser.IGameObject) => {
     if (e.button === 0) {
@@ -149,7 +150,13 @@ document.querySelector("#load").addEventListener("mouseup", (e: MouseEvent) => {
     }
 });
 
-document.querySelector("#creations-list").addEventListener("mouseup",(e: MouseEvent) => {
+document.querySelector("#help").addEventListener("mouseup", (e: MouseEvent) => {
+    if (e.button === 0) {
+        Laser.GUI.showInfo();
+    }
+});
+
+document.querySelector("#creations-list").addEventListener("mouseup", (e: MouseEvent) => {
 
     var name: string;
 
@@ -165,6 +172,12 @@ document.querySelector("#creations-list").addEventListener("mouseup",(e: MouseEv
 document.querySelector("#close-creations").addEventListener("mouseup", (e: MouseEvent) => {
     if (e.button === 0) {
         Laser.GUI.hideCreationsOverlay();
+    }
+});
+
+document.querySelector("#close-info").addEventListener("mouseup",(e: MouseEvent) => {
+    if (e.button === 0) {
+        Laser.GUI.hideInfo();
     }
 });
 
