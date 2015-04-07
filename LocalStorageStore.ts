@@ -7,9 +7,11 @@
         public save(name: string): void {
 
             try {
-                localStorage.setItem(name, JSON.stringify(this._scene.objects));
-                localStorage.setItem(name + "_img", this._scene.renderer.toImageData());
-                alert("Level has been saved to localStorage!");
+                this._scene.renderer.toImageData((data: string) => {
+                    localStorage.setItem(name, JSON.stringify(this._scene.objects));
+                    localStorage.setItem(name + "_img", data);
+                    alert("Level has been saved to localStorage!");
+                });
             } catch (ex) {
                 debugger;
             }

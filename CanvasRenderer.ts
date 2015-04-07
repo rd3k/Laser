@@ -54,7 +54,7 @@
 
         }
 
-        public toImageData(): string {
+        public toImageData(cb: (data: string) => void): void {
 
             var tempCanvas = <HTMLCanvasElement>document.createElement("canvas"),
                 tempContext = tempCanvas.getContext("2d"),
@@ -62,9 +62,11 @@
 
             tempCanvas.width = 200;
             tempCanvas.height = 150;
+            tempImage.onload = () => {
+                tempContext.drawImage(tempImage, 0, 0, 200, 150);
+                cb(tempCanvas.toDataURL());
+            };
             tempImage.src = this._canvas.toDataURL();
-            tempContext.drawImage(tempImage, 0, 0, 200, 150);
-            return tempCanvas.toDataURL();
 
         }
 

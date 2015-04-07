@@ -4,7 +4,7 @@
 
         element: HTMLElement
         clear(): void
-        toImageData(): string
+        toImageData(cb: (data: string) => void): void
         setCursor(cursor: string): void
         renderEmitter(emitter: Emitter): void
         renderWall(wall: Wall): void
