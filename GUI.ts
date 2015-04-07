@@ -76,7 +76,7 @@
 
             while (i--) {
                 item = <HTMLElement>template.cloneNode(true);
-                item.firstElementChild.setAttribute("data-name", items[i].name);
+                (<HTMLElement>item.firstChild).setAttribute("data-name", items[i].name);
                 (<HTMLInputElement>item.querySelector("img")).src = items[i].image;
                 (<HTMLSpanElement>item.querySelector("span")).innerText = items[i].name;
                 creationsListElement.appendChild(item);
