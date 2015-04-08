@@ -1,31 +1,136 @@
 ﻿module rd3k.Laser.GUI {
 
-    var _tweakerElement: HTMLElement = null;
     var _tweakingObject: IGameObject = null;
 
-    export var dropOverlayElement: HTMLElement = null;
-    export var hudElement: HTMLElement = null;
-    export var levelNameElement: HTMLInputElement = null;
-    export var creationsOverlayElement: HTMLElement = null;
-    export var creationsListElement: HTMLElement = null;
-    export var infoElement: HTMLElement = null;
+    var _tweakerElement: HTMLElement = null;
+    var _dropOverlayElement: HTMLElement = null;
+    var _hudElement: HTMLElement = null;
+    var _levelNameElement: HTMLInputElement = null;
+    var _creationsOverlayElement: HTMLElement = null;
+    var _creationsListElement: HTMLElement = null;
+    var _infoElement: HTMLElement = null;
 
-    export function setTweakerElement(value: HTMLElement) {
+    export function init() {
 
-        _tweakerElement = value;
+        _tweakerElement = <HTMLElement>document.querySelector("#tweaker");
         _tweakerElement.addEventListener("mousemove", (e: MouseEvent) => {
             e.stopPropagation();
         });
 
-    }
+        _dropOverlayElement = <HTMLElement>document.querySelector("#drop");
+        _hudElement = <HTMLElement>document.querySelector("#hud");
+        _levelNameElement = <HTMLInputElement>document.querySelector("#level-name");
+        _creationsOverlayElement = <HTMLElement>document.querySelector("#creations");
+        _creationsListElement = <HTMLElement>document.querySelector("#creations-list");
+        _infoElement = <HTMLElement>document.querySelector("#info");
 
-    export function addTweakerEventListener(selector: string, event: string, handler: (e: Event, object: IGameObject) => void): void {
+        addTweakerEventListener("#delete", "mouseup", (e: MouseEvent, o: Laser.IGameObject) => {
+            if (e.button === 0) {
+                scene.removeObject(o);
+                scene.invalidate();
+                hideTweaker();
+            }
+        });
 
-        var el: HTMLElement = <HTMLElement>_tweakerElement.querySelector(selector);
+        ["red", "lime", "blue", "grey"].forEach(c => addTweakerEventListener(`#${c}`, "mouseup", (e: MouseEvent, o: Laser.IGameObject) => {
+            if (e.button === 0 && (o instanceof Emitter || o instanceof Filter || o instanceof Wall)) {
+                o.colour = c;
+                scene.invalidate();
+                hideTweaker();
+            }
+        }));
 
-        if (el) {
-            el.addEventListener(event, e => handler.call(null, e, _tweakingObject));
-        }
+        document.querySelector("#clear").addEventListener("mouseup", (e: MouseEvent) => {
+            if (e.button === 0) {
+                if (scene.objects.length > 0 && confirm("Remove all objects?")) {
+                    scene.empty.call(scene);
+                }
+            }
+        });
+
+        document.querySelector("#new").addEventListener("mouseup", (e: MouseEvent) => {
+            if (e.button === 0) {
+                if (scene.objects.length > 0 && confirm("Remove all objects?")) {
+                    scene.empty.call(scene);
+                }
+                setLevelName("");
+            }
+        });
+
+        document.querySelector("#save").addEventListener("mouseup", (e: MouseEvent) => {
+            if (e.button === 0) {
+
+                var name = _levelNameElement.value;
+
+                if (scene.objects.length === 0) {
+                    alert("Level is empty!");
+                    return;
+                }
+
+                if (name.trim().length === 0) {
+                    name = "unnamed-" + Date.now();
+                }
+
+                browserStore.save(name);
+
+            }
+        });
+
+        document.querySelector("#download").addEventListener("mouseup", (e: MouseEvent) => {
+            if (e.button === 0) {
+
+                var name = _levelNameElement.value;
+
+                if (scene.objects.length === 0) {
+                    alert("Level is empty!");
+                    return;
+                }
+
+                if (name.trim().length === 0) {
+                    name = "unnamed-" + Date.now();
+                }
+
+                fileStore.save(name);
+
+            }
+        });
+
+        document.querySelector("#load").addEventListener("mouseup", (e: MouseEvent) => {
+            if (e.button === 0) {
+                showCreationsOverlay(browserStore.getList());
+            }
+        });
+
+        document.querySelector("#help").addEventListener("mouseup", (e: MouseEvent) => {
+            if (e.button === 0) {
+                showInfo();
+            }
+        });
+
+        document.querySelector("#creations-list").addEventListener("mouseup",(e: MouseEvent) => {
+
+            var name: string;
+
+            if (e.button === 0 && (<HTMLElement>e.target).className === "creations-item") {
+                hideCreationsOverlay();
+                name = (<HTMLElement>e.target).getAttribute("data-name")
+                browserStore.load(name);
+                setLevelName(name);
+            }
+
+        });
+
+        document.querySelector("#close-creations").addEventListener("mouseup",(e: MouseEvent) => {
+            if (e.button === 0) {
+                hideCreationsOverlay();
+            }
+        });
+
+        document.querySelector("#close-info").addEventListener("mouseup",(e: MouseEvent) => {
+            if (e.button === 0) {
+                hideInfo();
+            }
+        });
 
     }
 
@@ -50,16 +155,16 @@
 
     export function showDropOverlay(): void {
 
-        if (dropOverlayElement) {
-            dropOverlayElement.classList.add("visible");
+        if (_dropOverlayElement) {
+            _dropOverlayElement.classList.add("visible");
         }
 
     }
 
     export function hideDropOverlay(): void {
 
-        if (dropOverlayElement) {
-            dropOverlayElement.classList.remove("visible");
+        if (_dropOverlayElement) {
+            _dropOverlayElement.classList.remove("visible");
         }
 
     }
@@ -70,21 +175,21 @@
             i = items.length,
             item: HTMLElement;
 
-        if (hudElement && creationsOverlayElement) {
+        if (_hudElement && _creationsOverlayElement) {
 
-            hudElement.classList.add("hidden");
-            creationsListElement.innerText = "";
+            _hudElement.classList.add("hidden");
+            _creationsListElement.innerText = "";
 
             while (i--) {
                 item = <HTMLElement>template.cloneNode(true);
                 (<HTMLElement>item.firstChild).setAttribute("data-name", items[i].name);
                 (<HTMLInputElement>item.querySelector("img")).src = items[i].image;
                 (<HTMLSpanElement>item.querySelector("span")).innerText = items[i].name;
-                creationsListElement.appendChild(item);
+                _creationsListElement.appendChild(item);
             }
 
             setTimeout(() => {
-                creationsOverlayElement.classList.add("visible");
+                _creationsOverlayElement.classList.add("visible");
             }, 200);
 
         }
@@ -93,21 +198,21 @@
 
     export function hideCreationsOverlay(): void {
 
-        if (hudElement && creationsOverlayElement) {
-            hudElement.classList.remove("hidden");
-            creationsOverlayElement.classList.remove("visible");
+        if (_hudElement && _creationsOverlayElement) {
+            _hudElement.classList.remove("hidden");
+            _creationsOverlayElement.classList.remove("visible");
         }
 
     }
 
     export function showInfo(): void {
 
-        if (hudElement && infoElement) {
+        if (_hudElement && _infoElement) {
 
-            hudElement.classList.add("hidden");
+            _hudElement.classList.add("hidden");
 
             setTimeout(() => {
-                infoElement.classList.add("visible");
+                _infoElement.classList.add("visible");
             }, 200);
 
         }
@@ -116,9 +221,25 @@
 
     export function hideInfo(): void {
 
-        if (hudElement && infoElement) {
-            hudElement.classList.remove("hidden");
-            infoElement.classList.remove("visible");
+        if (_hudElement && _infoElement) {
+            _hudElement.classList.remove("hidden");
+            _infoElement.classList.remove("visible");
+        }
+
+    }
+
+    export function setLevelName(value: string): void {
+
+        _levelNameElement.value = value;
+
+    }
+
+    function addTweakerEventListener(selector: string, event: string, handler: (e: Event, object: IGameObject) => void): void {
+
+        var el: HTMLElement = <HTMLElement>_tweakerElement.querySelector(selector);
+
+        if (el) {
+            el.addEventListener(event, e => handler.call(null, e, _tweakingObject));
         }
 
     }

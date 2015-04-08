@@ -87,7 +87,7 @@
 
                     if (Array.isArray(parsedData)) {
                         this._scene.loadFromJSON(<Array<Object>>parsedData);
-                        GUI.levelNameElement.value = name;
+                        GUI.setLevelName(name);
                     } else {
                         throw Error;
                     }
